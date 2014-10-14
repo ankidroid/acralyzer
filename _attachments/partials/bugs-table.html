@@ -38,12 +38,12 @@
                 <span title="Updating state" ng-show="bug.solvedPending"><img src="img/polling.gif"/></span>
             </a>
         </div>
-        <div title="Number of reports" class="div-table-cell label">{{bug.value.count}}</div>
-        <div title="Latest report" class="div-table-cell label label-info">{{bug.latest}}</div>
-        <div title="Application version code" class="div-table-cell label label-warning">{{bug.key[0]}}</div>
-        <div class="div-table-cell exceptions">
+        <a href="#/reports-browser/{{acralyzer.app}}/bug/{{bug.id}}" title="Number of reports" class="div-table-cell label">{{bug.value.count}}</a>
+        <a href="#/reports-browser/{{acralyzer.app}}/bug/{{bug.id}}" title="Latest report" class="div-table-cell label label-info">{{bug.latest}}</a>
+        <a href="#/reports-browser/{{acralyzer.app}}/bug/{{bug.id}}" title="Application version code" class="div-table-cell label label-warning">{{bug.key[0]}}</a>
+        <a href="#/reports-browser/{{acralyzer.app}}/bug/{{bug.id}}" class="div-table-cell exceptions">
             <span title="Exception" class="label label-important">{{bug.key[1]}}</span><br/>
             <span title="Root exception" class="label label-inverse" ng-show="bug.key[2]">Caused by: {{bug.key[2]}}</span>
-        </div>
+        </a>
     </div>
 </div>
