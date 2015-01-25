@@ -26,7 +26,7 @@
     * @static
     */
     acralyzer.service('$user', ['$rootScope', '$q', '$resource', '$http', function($rootScope, $q, $resource, $http) {
-        var SessionResource = $resource('/_session');
+        var SessionResource = $resource(acralyzerConfig.urlPrefix + '/_session');
         var UserResource;
         var acralyzerDbName = location.pathname.split("/")[1];
         var PreferencesResource = $resource("/" + acralyzerDbName + "/org.couchdb.user\\::name",
@@ -120,7 +120,7 @@
             /* Does this box support changing admin passwords */
             if ($user.username && $user.isAdmin && _hasAdminPath === undefined)
             {
-                $http.get('/_config/admins/' + $user.username)
+                $http.get(acralyzerConfig + '/_config/admins/' + $user.username)
                 .success(function(data, status, headers, config) {
                     if (data.match(/^"-hashed-/)) {
                         _hasAdminPath = true;
@@ -154,7 +154,7 @@
             var newSession = new SessionResource(data);
             */
             var _newSessionPromise = $http.post(
-                '/_session',
+                acralyzerConfig.urlPrefix + '/_session',
                 $.param(data),
                 {
                     headers: {
@@ -193,7 +193,7 @@
             }
 
             if ($user.isAdmin && _hasAdminPath === true) {
-                $http.put('/_config/admins/'+$user.username, JSON.stringify(password))
+                $http.put(acralyzerConfig.urlPrefix + '/_config/admins/'+$user.username, JSON.stringify(password))
                 .success(function() {
                     $user.logout();
                     deferred.resolve();
@@ -330,7 +330,7 @@
             $http(
                 {
                     method: 'PUT',
-                    url: '/_users/org.couchdb.user:' + login,
+                    url: acralyzerConfig.urlPrefix + '/_users/org.couchdb.user:' + login,
                     data: userData
                 }
             ).success(

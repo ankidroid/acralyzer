@@ -5,6 +5,7 @@
     acralyzerConfig.backgroundPollingOnStartup = true;
 
     acralyzerConfig.appDBPrefix = "acra-";
+    acralyzerConfig.urlPrefix = "";
 
     // Helper functions
 
