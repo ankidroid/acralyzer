@@ -46,11 +46,11 @@
         */
         ReportsStore.setApp = function (newAppName, cb) {
             ReportsStore.dbName = acralyzerConfig.appDBPrefix + newAppName;
-            ReportsStore.views = $resource('/' + ReportsStore.dbName + '/_design/acra-storage/_view/:view');
-            ReportsStore.details = $resource('/' + ReportsStore.dbName + '/:reportid');
-            ReportsStore.bug = $resource('/' + ReportsStore.dbName + '/:bugid', { bugid: '@_id' }, { save: {method: 'PUT'}});
-            ReportsStore.dbstate = $resource('/' + ReportsStore.dbName + '/');
-            ReportsStore.changes = $resource('/' + ReportsStore.dbName + '/_changes');
+            ReportsStore.views = $resource(acralyzerConfig.urlPrefix + '/' + ReportsStore.dbName + '/_design/acra-storage/_view/:view');
+            ReportsStore.details = $resource(acralyzerConfig.urlPrefix + '/' + ReportsStore.dbName + '/:reportid');
+            ReportsStore.bug = $resource(acralyzerConfig.urlPrefix + '/' + ReportsStore.dbName + '/:bugid', { bugid: '@_id' }, { save: {method: 'PUT'}});
+            ReportsStore.dbstate = $resource(acralyzerConfig.urlPrefix + '/' + ReportsStore.dbName + '/');
+            ReportsStore.changes = $resource(acralyzerConfig.urlPrefix + '/' + ReportsStore.dbName + '/_changes');
             ReportsStore.lastseq = -1;
             cb();
         };
@@ -71,7 +71,7 @@
                 }
                 cb(finalData);
             };
-            $http.get('/_all_dbs').success(filterDbsCallback).error(errorHandler);
+            $http.get(acralyzerConfig.urlPrefix + '/_all_dbs').success(filterDbsCallback).error(errorHandler);
         };
 
         /**
@@ -353,7 +353,7 @@
                     console.log(doc);
                 }
                 console.log("Deleting " + docsToPurge.length + "reports.");
-                $http.post("/" + ReportsStore.dbName + "/_bulk_docs", { docs: docsToPurge })
+                $http.post(acralyzerConfig.urlPrefix + "/" + ReportsStore.dbName + "/_bulk_docs", { docs: docsToPurge })
                     .success(finalCallback);
             };
 
@@ -391,7 +391,7 @@
                     console.log(doc);
                 }
                 console.log("Deleting " + docsToPurge.length + "reports.");
-                $http.post("/" + ReportsStore.dbName + "/_bulk_docs", { docs: docsToPurge })
+                $http.post(acralyzerConfig.urlPrefix + "/" + ReportsStore.dbName + "/_bulk_docs", { docs: docsToPurge })
                     .success(finalCallback);
             };
 

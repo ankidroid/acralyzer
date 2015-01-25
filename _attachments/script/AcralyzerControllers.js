@@ -131,7 +131,7 @@
         };
 
         // Check if hosting is Cloudant or older CouchDB version
-        $http({method : 'GET', url: '/'}).success(function(data){
+        $http({method : 'GET', url: acralyzerConfig.urlPrefix + '/'}).success(function(data){
             if(data.cloudant_build) {
                 $scope.acralyzer.cloudant = true;
                 acralyzer.cloudant = true;
