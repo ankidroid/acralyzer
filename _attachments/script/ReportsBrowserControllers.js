@@ -30,10 +30,10 @@
 
         console.log("Init ReportsBrowserCtrl");
         $scope.paginator = {
-            pageSize: 15,
+            pageSize: 500,
             currentPage: 0
         };
-        $scope.pageSizeList = [15, 30, 50, 100];
+        $scope.pageSizeList = [15, 30, 50, 100, 500];
 
         $scope.previousStartKeys = [];
         $scope.selectedReport = "";

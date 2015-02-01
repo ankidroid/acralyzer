@@ -200,9 +200,9 @@
             compile: function compile(tElement, tAttrs, transclude) {
                 return {
                     pre: function preLink(scope, iElement, iAttrs, controller) {
-                        scope.pageSizeList = [15, 30, 50, 100];
+                        scope.pageSizeList = [15, 30, 50, 100, 500];
                         scope.paginator = {
-                            pageSize: 15,
+                            pageSize: 500,
                             currentPage: 0
                         };
 
