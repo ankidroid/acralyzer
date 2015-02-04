@@ -18,14 +18,14 @@
                 <i class="icon-trash" title="Delete permanently"></i>
             </a>
         </div>
-        <span title="User" class="div-table-cell label label-inverse"><img class="avatar" monsterid="{{report.value.installation_id}}" ng-show="report.value.installation_id"/></span>
-        <span title="Crash date" class="div-table-cell label label-info">{{report.displayDate}}</span>
-        <span title="Application version name" class="div-table-cell label label-warning">{{report.value.application_version_name}}</span>
-        <span title="Android verion" class="div-table-cell label label-success">{{report.value.android_version}}</span>
-        <span title="Device" class="div-table-cell label">{{report.value.device}}</span>
+        <a ng-click="loadReport(report)" title="User" class="div-table-cell label label-inverse"><img class="avatar" monsterid="{{report.value.installation_id}}" ng-show="report.value.installation_id"/></a>
+        <a ng-click="loadReport(report)"  title="Crash date" class="div-table-cell label label-info">{{report.displayDate}}</a>
+        <a ng-click="loadReport(report)" title="Application version name" class="div-table-cell label label-warning">{{report.value.application_version_name}}</a>
+        <a ng-click="loadReport(report)" title="Android verion" class="div-table-cell label label-success">{{report.value.android_version}}</a>
+        <a ng-click="loadReport(report)" title="Device" class="div-table-cell label">{{report.value.device}}</a>
         <div class="div-table-cell exceptions">
-            <span title="Exception" class="label label-important">{{report.value.signature.digest}}</span>
-            <span title="Root exception" class="label label-inverse" ng-show="report.value.signature.rootCause">Caused by: {{report.value.signature.rootCause}}</span>
+            <a ng-click="loadReport(report)" title="Exception" class="label label-important">{{report.value.signature.digest}}</a>
+            <a ng-click="loadReport(report)" title="Root exception" class="label label-inverse" ng-show="report.value.signature.rootCause">Caused by: {{report.value.signature.rootCause}}</a>
         </div>
     </div>
 </div>

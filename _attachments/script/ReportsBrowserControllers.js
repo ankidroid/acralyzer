@@ -181,6 +181,9 @@
         };
 
         $scope.deleteReport = function(report) {
+            if (!confirm('Delete report?')) {
+                return;
+            }
             if($scope.selectedReport === report) {
                 $scope.selectedReport = "";
             }
