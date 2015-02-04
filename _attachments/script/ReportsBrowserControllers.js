@@ -109,6 +109,9 @@
                 $scope.endNumber = $scope.startNumber + $scope.reports.length - 1;
 
                 $scope.loading = false;
+                if($scope.bugId) {
+                    $scope.loadReport($scope.reports[0]);
+                }
             };
 
             var errorHandler = function(response, getResponseHeaders){
