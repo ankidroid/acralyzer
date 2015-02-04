@@ -178,6 +178,7 @@
                 data.formatedCrashDate = moment(data.USER_CRASH_DATE).format('LLL');
                 data.formatedTimestamp = moment(data.timestamp).format('LLL');
             });
+            document.getElementById("report-details-id").scrollIntoView();
         };
 
         $scope.deleteReport = function(report) {
