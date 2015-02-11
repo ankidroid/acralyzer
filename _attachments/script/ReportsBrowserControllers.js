@@ -30,7 +30,7 @@
 
         console.log("Init ReportsBrowserCtrl");
         $scope.paginator = {
-            pageSize: 500,
+            pageSize: 100,
             currentPage: 0
         };
         $scope.pageSizeList = [15, 30, 50, 100, 500];

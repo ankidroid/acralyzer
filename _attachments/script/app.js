@@ -202,7 +202,7 @@
                     pre: function preLink(scope, iElement, iAttrs, controller) {
                         scope.pageSizeList = [15, 30, 50, 100, 500];
                         scope.paginator = {
-                            pageSize: 500,
+                            pageSize: 100,
                             currentPage: 0
                         };
 
