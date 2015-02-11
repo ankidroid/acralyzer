@@ -16,7 +16,6 @@
     "grunt-contrib-imagemin": "0.1.2",
     "grunt-usemin": "~0.1.9",
     "grunt-regarde": "~0.1.1",
-    "grunt-mocha": "~0.3.4",
     "grunt-open": "~0.2.0",
     "matchdep": "~0.1.1",
     "grunt-contrib-compress": "~0.4.1"
