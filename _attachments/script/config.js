@@ -5,7 +5,7 @@
     acralyzerConfig.backgroundPollingOnStartup = true;
 
     acralyzerConfig.appDBPrefix = "acra-";
-    acralyzerConfig.urlPrefix = "/couchdb";
+    acralyzerConfig.urlPrefix = "";
 
     // Helper functions
 
