@@ -5,7 +5,7 @@
     acralyzerConfig.backgroundPollingOnStartup = true;
 
     acralyzerConfig.appDBPrefix = "acra-";
-    acralyzerConfig.urlPrefix = "";
+    acralyzerConfig.urlPrefix = "https://couchdb.ankidroid.org";
 
     // Helper functions
 
