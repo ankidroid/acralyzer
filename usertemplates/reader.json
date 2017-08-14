@@ -1,7 +1,0 @@
-{
-    "_id": "org.couchdb.user:readeruser",
-    "name": "readeruser",
-    "roles": ["reader"],
-    "type": "user",
-    "password": "readerpassword"
-}

@@ -7,7 +7,6 @@
   "Gruntfile.js",
   "package.json",
   "^imgsrc$",
-  "^usertemplates$",
   "LICENSE",
   "README.md",
   ".idea",

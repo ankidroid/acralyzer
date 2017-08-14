@@ -1,7 +1,0 @@
-{
-    "_id": "org.couchdb.user:reporteruser",
-    "name": "reporteruser",
-    "roles": ["reporter"],
-    "type": "user",
-    "password": "reporterpassword"
-}
