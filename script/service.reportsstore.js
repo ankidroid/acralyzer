@@ -174,10 +174,6 @@
             return ReportsStore.views.get({view: 'recent-items-by-appver', group_level: 1}, cb);
         };
 
-        ReportsStore.appVersionCodesList = function(cb) {
-            return ReportsStore.views.get({view: 'recent-items-by-appvercode', group_level: 1}, cb);
-        };
-
         ReportsStore.androidVersionsList = function(cb) {
             return ReportsStore.views.get({view: 'recent-items-by-androidver', group_level: 1}, cb);
         };
