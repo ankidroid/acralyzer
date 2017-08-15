@@ -126,12 +126,6 @@
             $scope.apps = appsList;
         });
 
-        $scope.storeDefaultApp = function() {
-            $user.updatePreferences({
-                defaultApp: acralyzerConfig.defaultApp
-            });
-        };
-
         // USERS MANAGEMENT
         $scope.formUri = 'http://' + location.host + '/' + acralyzerConfig.appDBPrefix + $scope.acralyzer.app + '/_design/acra-storage/_update/report';
         $scope.createReporterUser = function(login, password) {
