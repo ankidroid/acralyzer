@@ -266,27 +266,6 @@
             return false;
         };
 
-        $user.updatePreferences = function(prefs, callback, errorcallback) {
-            console.log("Store preferences ", prefs, " for user ", $user, " in database " + acralyzerDbName);
-            var curPrefs = PreferencesResource.get({ name: $user.username}, function() {
-                for(var pref in prefs) {
-                    curPrefs[pref] = prefs[pref];
-                }
-                curPrefs.$save(callback, errorcallback);
-            }, function() {
-                // Fail callback
-                curPrefs = new PreferencesResource(
-                    {
-                        name: $user.username
-                    }
-                );
-                for(var pref in prefs) {
-                    curPrefs[pref] = prefs[pref];
-                }
-                curPrefs.$save(callback, errorcallback);
-            });
-        };
-
         /**
          * Try to login using current cookies.
          */
