@@ -34,7 +34,6 @@
             {'save': { method: 'PUT' }}
         );
 
-        var _hasAdminPath;
         var _session;
 
         /*
@@ -50,14 +49,6 @@
              * @readOnly
              */
             $user.username = null;
-            /**
-             * Is current user an admin
-             *
-             * @property {Boolean} isAdmin
-             * @type Boolean
-             * @readOnly
-             */
-            $user.isAdmin = false;
             /**
              * Current users roles (as object)
              *
@@ -94,7 +85,6 @@
             userCtx.roles.forEach(function(role) {
                 $user.roles[role] = 1;
             });
-            $user.isAdmin = ($user.roles['_admin'] === 1);
             $user.username = userCtx.name;
             if ($user.username) {
                 /* Load preferences for this user on this acralyzer db instance */
@@ -116,21 +106,6 @@
                 $rootScope.$broadcast(acralyzerEvents.LOGGED_OUT, $user);
             }
             $rootScope.$broadcast(acralyzerEvents.LOGIN_CHANGE, $user);
-
-            /* Does this box support changing admin passwords */
-            if ($user.username && $user.isAdmin && _hasAdminPath === undefined)
-            {
-                $http.get(acralyzerConfig + '/_config/admins/' + $user.username)
-                .success(function(data, status, headers, config) {
-                    if (data.match(/^"-hashed-/)) {
-                        _hasAdminPath = true;
-                    } else {
-                        _hasAdminPath = false;
-                    }
-                }).error(function(data, status, headers, config) {
-                    _hasAdminPath = false;
-                });
-            }
         };
 
         var $user = this;
@@ -176,52 +151,6 @@
         };
 
         /**
-        * Changes the password of the currently logged in user
-        *
-        * Side effect: logs out user
-        *
-        * @method changePassword
-        * @param {String} password New Password for the user
-        *
-        * @return {Promise} Promise for completion of change password
-        */
-        $user.changePassword = function(password) {
-            var deferred = $q.defer();
-            if (!password) {
-                deferred.reject("Missing password");
-                return deferred.promise;
-            }
-
-            if ($user.isAdmin && _hasAdminPath === true) {
-                $http.put(acralyzerConfig.urlPrefix + '/_config/admins/'+$user.username, JSON.stringify(password))
-                .success(function() {
-                    $user.logout();
-                    deferred.resolve();
-                })
-                .error(function() {
-                    deferred.reject(/* data.reason */);
-                });
-                return deferred.promise;
-            }
-            UserResource.get({ 'name': $user.username }, function(user) {
-                user.password = password;
-                user.$save(
-                    function() {
-                        $rootScope.$broadcast(acralyzerEvents.USER_PASSWORD_CHANGE, $user);
-                        $rootScope.$broadcast(acralyzerEvents.LOGIN_CHANGE, $user);
-                        $user.logout();
-                        deferred.resolve();
-                    },
-                    function() {
-                        console.log(arguments);
-                        deferred.reject();
-                    }
-                );
-            });
-            return deferred.promise;
-        };
-
-        /**
         * Logout the current user
         *
         * @method logout
@@ -241,26 +170,13 @@
         };
 
         /**
-         * Does this install support changing passwords?
-         *
-         * @method canChangePassword
-         * @return {Boolean} True if system can support changing password
-         */
-        $user.canChangePassword = function() {
-            if ($user.isAdmin && !_hasAdminPath) {
-                return false;
-            }
-            return true;
-        };
-
-        /**
          * Is the current logged in user a 'reader'
          *
          * @method isReader
          * @return {Boolean} True if user is allowed to read data
          */
         $user.isReader = function() {
-            if ($user.isAdmin || $user.roles.reader) {
+            if ($user.roles.reader) {
                 return true;
             }
             return false;
