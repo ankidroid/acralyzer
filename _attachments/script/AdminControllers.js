@@ -29,95 +29,12 @@
             $scope.acralyzer.setApp(acralyzerConfig.defaultApp);
         }
 
-        // REPORTS PURGES
-        $scope.daysToKeep = 90;
-        $scope.selectedVersion = "";
-        $scope.appVersionCodes = [];
-        $scope.purgingByDays = false;
-        $scope.purgingByAppVersionCode = false;
-        $scope.nbReportsByDaysToPurge = "";
-        $scope.nbReportsByAppVersionCodeToPurge = "";
-
         ReportsStore.appVersionCodesList(function(data){
             $scope.appVersionCodes.length = 0;
             for(var row = 0; row < data.rows.length; row++) {
                 $scope.appVersionCodes.push({value:data.rows[row].key[0], label:data.rows[row].key[0]});
             }
         });
-
-        $scope.purgeDays = function(daysToKeep) {
-            $scope.purgingByDays = true;
-            var deadline = moment().subtract('days', daysToKeep);
-            console.log("Purge reports older than " + daysToKeep);
-            console.log("key will be: " + deadline.format("[[]YYYY,M,d[]]"));
-            ReportsStore.purgeReportsOlderThan(deadline.year(), deadline.month(), deadline.date(),
-                function(nbReports) {
-                    // Intermediate callback
-                    $scope.nbReportsByDaysToPurge = nbReports;
-                },
-                function(data) {
-                    // Success callback
-                    $scope.purgingByDays = false;
-                    $scope.nbReportsByDaysToPurge = "";
-                    $notify.success({
-                        desktop: true,
-                        timeout: 10000,
-                        title: "Acralyzer - " + $scope.acralyzer.app,
-                        body: "Purge of " + data.length + " reports succeeded, keeping the last " + daysToKeep + " days.",
-                        icon: "img/loader.gif"
-                    });
-                },
-                function(){
-                    // Failure callback
-                    $scope.purgingByDays = false;
-                    $scope.nbReportsByDaysToPurge = "";
-                    $notify.success({
-                        desktop: true,
-                        timeout: 10000,
-                        title: "Acralyzer - " + $scope.acralyzer.app,
-                        body: "Purge failed.",
-                        icon: "img/loader.gif"
-                    });
-                }
-            );
-        };
-
-        $scope.purgeVersion = function(selectedVersion) {
-            $scope.purgingByAppVersionCode = true;
-            console.log("Purge reports from version " + selectedVersion + " and older.");
-            console.log(selectedVersion);
-            ReportsStore.purgeReportsFromAppVersionCodeAndBelow(selectedVersion,
-                function(nbReports) {
-                    // Intermediate callback
-                    $scope.nbReportsByAppVersionCodeToPurge = nbReports;
-                },
-                function(data) {
-                    // Success callback
-                    ReportsStore.appVersionCodesList();
-                    $scope.purgingByAppVersionCode = false;
-                    $scope.nbReportsByAppVersionCodeToPurge = "";
-                    $notify.success({
-                        desktop: true,
-                        timeout: 10000,
-                        title: "Acralyzer - " + $scope.acralyzer.app,
-                        body: "Purge of " + data.length + " reports succeeded, from " + selectedVersion + " and below.",
-                        icon: "img/loader.gif"
-                    });
-                },
-                function(){
-                    // Failure callback
-                    $scope.purgingByAppVersionCode = false;
-                    $scope.nbReportsByAppVersionCodeToPurge = "";
-                    $notify.success({
-                        desktop: true,
-                        timeout: 10000,
-                        title: "Acralyzer - " + $scope.acralyzer.app,
-                        body: "Purge failed.",
-                        icon: "img/loader.gif"
-                    });
-                }
-            );
-        };
 
         // USER PREFERENCES
         $scope.acralyzerConfig = acralyzerConfig;
