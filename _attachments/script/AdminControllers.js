@@ -125,15 +125,6 @@
         ReportsStore.listApps(function(appsList) {
             $scope.apps = appsList;
         });
-
-        // USERS MANAGEMENT
-        $scope.formUri = 'http://' + location.host + '/' + acralyzerConfig.appDBPrefix + $scope.acralyzer.app + '/_design/acra-storage/_update/report';
-        $scope.createReporterUser = function(login, password) {
-            console.log("Transfer user creation to $user ", login, password);
-            $user.addReporterUser(login, password, function(){
-                $scope.newReporterCreated = true;
-            });
-        };
     }
     acralyzer.controller('AdminCtrl', ["$scope", "ReportsStore", "$routeParams", "$notify", "$user", "$http", AdminCtrl]);
 
