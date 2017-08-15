@@ -27,6 +27,5 @@
     acralyzerEvents.LOGGED_OUT = "logged_out";
     acralyzerEvents.POLLING_FAILED = "polling failed";
     acralyzerEvents.APP_CHANGED = "app changed";
-    acralyzerEvents.USER_PASSWORD_CHANGE = "password_change";
 
 }( window.acralyzerEvents = window.acralyzerEvents || {}));
