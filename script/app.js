@@ -21,7 +21,7 @@
 
     var acralyzer = window.acralyzer = angular.module('Acralyzer', ['ui.bootstrap', 'ngResource']);
 
-    acralyzer.config(['$routeProvider', function($routeProvider) {
+    acralyzer.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
         $routeProvider.
             when('/dashboard/:app', {templateUrl: 'partials/dashboard.html',   controller: 'DashboardCtrl', activetab: "dashboard"}).
             when('/reports-browser/:app', {templateUrl: 'partials/reports-browser.html', controller: 'ReportsBrowserCtrl', activetab: "reports-browser"}).
@@ -30,6 +30,9 @@
             when('/bugs-browser/:app', {templateUrl: 'partials/bugs-browser.html', controller: 'BugsBrowserCtrl', activetab: "bugs-browser"}).
             when('/report-details/:app/:reportId', {templateUrl: 'partials/report-details.html', controller: 'ReportDetailsCtrl', activetab: "none"}).
             otherwise({redirectTo: '/dashboard/'});
+
+        // Needed for CORS sign-ins
+        $httpProvider.defaults.withCredentials = true;
     }]);
 
     acralyzer.directive('prettyprint',function(){
