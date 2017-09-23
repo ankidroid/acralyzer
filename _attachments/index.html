@@ -36,17 +36,8 @@
         <div class="navbar-inner">
             <a class="brand" href="#">Acralyzer</a>
             <ul class="nav">
-                <li class="dropdown" ng-cloak>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        {{acralyzer.app}}
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li ng-repeat="app in acralyzer.apps"><a href="#/{{$route.current.activetab}}/{{app}}">{{app}}</a></li>
-                    </ul>
-                </li>
-                <li ng-class="{active: $route.current.activetab == 'bugs-browser'}"><a href="#/bugs-browser/{{acralyzer.app}}">Bugs</a></li>
-                <li ng-class="{active: $route.current.activetab == 'reports-browser'}"><a href="#/reports-browser/{{acralyzer.app}}">Reports</a></li>
+                <li ng-class="{active: $route.current.activetab == 'bugs-browser'}"><a href="#/bugs-browser">Bugs</a></li>
+                <li ng-class="{active: $route.current.activetab == 'reports-browser'}"><a href="#/reports-browser">Reports</a></li>
             </ul>
 
             <div id="usermenu" class="btn-group pull-right" data-ng-controller="AccountCtrl">

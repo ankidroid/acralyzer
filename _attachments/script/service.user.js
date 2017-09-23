@@ -29,10 +29,6 @@
         var SessionResource = $resource(acralyzerConfig.urlPrefix + '/_session');
         var UserResource;
         var acralyzerDbName = location.pathname.split("/")[1];
-        var PreferencesResource = $resource("/" + acralyzerDbName + "/org.couchdb.user\\::name",
-            {'name':'@name'},
-            {'save': { method: 'PUT' }}
-        );
 
         var _session;
 
@@ -87,21 +83,7 @@
             });
             $user.username = userCtx.name;
             if ($user.username) {
-                /* Load preferences for this user on this acralyzer db instance */
-                PreferencesResource.get({
-                    name: $user.username
-                }, function(prefs){
-                    if(prefs.defaultApp) {
-                        console.log("Setting default app for current user to: ", prefs.defaultApp);
-                        acralyzerConfig.defaultApp = prefs.defaultApp;
-                        console.log("Broadcasting LOGGED_IN");
-                        $rootScope.$broadcast(acralyzerEvents.LOGGED_IN, $user);
-                    }
-                }, function() {
-                    // No preferences for current user, log in anyway.
-                    console.log("Broadcasting LOGGED_IN");
-                    $rootScope.$broadcast(acralyzerEvents.LOGGED_IN, $user);
-                });
+                $rootScope.$broadcast(acralyzerEvents.LOGGED_IN, $user);
             } else {
                 $rootScope.$broadcast(acralyzerEvents.LOGGED_OUT, $user);
             }

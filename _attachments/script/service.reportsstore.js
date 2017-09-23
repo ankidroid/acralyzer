@@ -27,46 +27,19 @@
      * @static
      */
     acralyzer.factory('ReportsStore', ['$rootScope', '$http', '$resource', function($rootScope, $http, $resource) {
+
+        var dbName = acralyzerConfig.appDBPrefix + acralyzerConfig.app;
+
         // ReportsStore service instance
         var ReportsStore = {
-            dbName : "",
+            dbName: dbName,
+            views: $resource(acralyzerConfig.urlPrefix + '/' + dbName + '/_design/acra-storage/_view/:view'),
+            details: $resource(acralyzerConfig.urlPrefix + '/' + dbName + '/:reportid'),
+            bug: $resource(acralyzerConfig.urlPrefix + '/' + dbName + '/:bugid', { bugid: '@_id' }, { save: {method: 'PUT'}})
         };
 
         // Markdown converter
         var converter = new Showdown.converter({extensions:['github','table']});
-
-        /**
-        * Switch to another app, i.e. reports storage database.
-        * @param {String} newAppName The app name. The database name is determined by adding prefix set in
-        * acralyzerConfig.appDBPrefix
-        * @param {function} cb Callback to be executed after database changed.
-        */
-        ReportsStore.setApp = function (newAppName, cb) {
-            ReportsStore.dbName = acralyzerConfig.appDBPrefix + newAppName;
-            ReportsStore.views = $resource(acralyzerConfig.urlPrefix + '/' + ReportsStore.dbName + '/_design/acra-storage/_view/:view');
-            ReportsStore.details = $resource(acralyzerConfig.urlPrefix + '/' + ReportsStore.dbName + '/:reportid');
-            ReportsStore.bug = $resource(acralyzerConfig.urlPrefix + '/' + ReportsStore.dbName + '/:bugid', { bugid: '@_id' }, { save: {method: 'PUT'}});
-            cb();
-        };
-
-        /**
-        * Gets the list of available apps for which we have crash reports databases.
-        * Looks for all CouchDB databases starting with
-        * @param {function} cb Callback which will receive an array of strings (app names) as a parameter.
-        * @param {function} [errorHandler] Callback to be triggered if an error occurs.
-        */
-        ReportsStore.listApps = function(cb, errorHandler) {
-            var filterDbsCallback = function(data) {
-                var finalData = [];
-                for (var i in data) {
-                    if(data[i].indexOf(acralyzerConfig.appDBPrefix) === 0) {
-                        finalData.push(data[i].substring(acralyzerConfig.appDBPrefix.length));
-                    }
-                }
-                cb(finalData);
-            };
-            $http.get(acralyzerConfig.urlPrefix + '/_all_dbs').success(filterDbsCallback).error(errorHandler);
-        };
 
         // Key: report ID Value: report digest
         ReportsStore.reportsList = function(startKey, reportsCount, includeDocs, cb, errorHandler) {

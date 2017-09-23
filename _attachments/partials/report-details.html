@@ -1,7 +1,7 @@
 <div ng-show="report._id">
     <hr/>
     <div class="report-details-header">
-        <div class="direct-link"><a href="#/report-details/{{acralyzer.app}}/{{report._id}}"><i class="icon-share"></i>direct link</a></div>
+        <div class="direct-link"><a href="#/report-details/{{report._id}}"><i class="icon-share"></i>direct link</a></div>
         <h3>Summary</h3>
         <table>
             <tr>
@@ -26,7 +26,7 @@
                 <th><i class="icon-user"></i></th>
                 <th>Installation ID</th>
                 <td>
-                    <a class="label label-inverse" href="#/reports-browser/{{acralyzer.app}}/user/{{report.INSTALLATION_ID}}" ng-show="report.INSTALLATION_ID">
+                    <a class="label label-inverse" href="#/reports-browser/user/{{report.INSTALLATION_ID}}" ng-show="report.INSTALLATION_ID">
                         <img class="avatar" monsterid="{{report.INSTALLATION_ID}}" title="{{report.INSTALLATION_ID}}"/>
                         {{report.INSTALLATION_ID}}
                     </a>

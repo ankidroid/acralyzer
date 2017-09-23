@@ -31,54 +31,11 @@
          * @type {Object}
          */
         $scope.acralyzer = {
-            apps: []
-        };
-        $scope.acralyzer.app = null;
-
-        ReportsStore.listApps(function(data) {
-            console.log("Storage list retrieved.");
-            $scope.acralyzer.apps.length = 0;
-            $scope.acralyzer.apps = data;
-            console.log($scope.acralyzer.apps);
-        }, function() {
-
-        });
-
-        var onUserLogin = function() {
-
-            if(!($routeParams.app)){
-                $scope.acralyzer.setApp(acralyzerConfig.defaultApp);
-            }
-
+            app: acralyzerConfig.app
         };
 
         /**
-         * Switch to another reports store.
-         * @param {String} appName The name of the chosen android application (reports store database without database
-         * prefix)
-         */
-        $scope.acralyzer.setApp = function(appName) {
-            console.log("Setting app to ", appName);
-            if(!appName) {
-                appName = $scope.acralyzer.apps[0];
-                console.log("Override setting undefined app to ", appName);
-            }
-            if(appName !== $scope.acralyzer.app) {
-                $scope.acralyzer.app = appName;
-                ReportsStore.setApp($scope.acralyzer.app,
-                    function() {
-                        console.log("broadcasting APP_CHANGED");
-                        $rootScope.$broadcast(acralyzerEvents.APP_CHANGED);
-                    }
-                );
-            }
-        };
-
-        $scope.$on(acralyzerEvents.LOGGED_IN, onUserLogin);
-
-        /**
-         * Try to log user and execute initialization when done. onUserLogin() will be triggered by LOGGED_IN broadcast
-         * event.
+         * Try to log user and execute initialization when done.
          */
         $user.init();
 

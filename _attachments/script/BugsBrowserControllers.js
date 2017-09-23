@@ -20,13 +20,6 @@
     "use strict";
 
     function BugsBrowserCtrl($scope, ReportsStore, $routeParams) {
-        if($routeParams.app) {
-            console.log("BugsBrowser: Direct access to app " + $routeParams.app);
-            $scope.acralyzer.setApp($routeParams.app);
-        } else {
-            console.log("BugsBorwser: Access to default app " + acralyzerConfig.defaultApp);
-            $scope.acralyzer.setApp(acralyzerConfig.defaultApp);
-        }
 
         console.log("Init BugsBrowserCtrl");
         $scope.bugsList = [];
