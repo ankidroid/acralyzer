@@ -24,7 +24,7 @@
      * Application root controller, handles global behavior such as login logout and reports store change.
      *
      */
-    function AcralyzerCtrl($user, $scope, ReportsStore, $rootScope, $notify, $routeParams, $http) {
+    function AcralyzerCtrl($user, $scope, ReportsStore, $rootScope, $routeParams, $http) {
 
         /**
          * Application scope, visible to children scopes with $scope.acralyzer.
@@ -83,5 +83,5 @@
         $user.init();
 
     }
-    acralyzer.controller('AcralyzerCtrl', ["$user", "$scope", "ReportsStore", "$rootScope", "$notify", "$routeParams", "$http", AcralyzerCtrl]);
+    acralyzer.controller('AcralyzerCtrl', ["$user", "$scope", "ReportsStore", "$rootScope", "$routeParams", "$http", AcralyzerCtrl]);
 })(window.acralyzerConfig,window.angular,window.acralyzer,window.acralyzerEvents,window.jQuery);

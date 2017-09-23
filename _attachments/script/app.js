@@ -119,36 +119,6 @@
         };
     });
 
-
-    acralyzer.directive('notificationsSupport', [function() {
-        return {
-            restrict: 'A',
-            link: function(scope,elm,attrs,controller) {
-                if ("Notification" in window && window.Notification.permissionLevel) {
-                    if (window.Notification.permissionLevel() === "default") {
-                        elm.on('click', function(ev) {
-                            window.Notification.requestPermission(function () {
-                                elm.remove();
-                            });
-                        });
-                        return;
-                    }
-                }
-                else if (window.webkitNotifications) {
-                    if (window.webkitNotifications.checkPermission() === 1) {
-                        elm.on('click', function(ev) {
-                            window.webkitNotifications.requestPermission(function () {
-                                elm.remove();
-                            });
-                        });
-                        return;
-                    }
-                }
-                /* Not allowed or not supported */
-                elm.remove();
-            }
-        };
-    }]);
     /* http://jsfiddle.net/S8TYF/ */
     acralyzer.directive('sameAs', function() {
         return {

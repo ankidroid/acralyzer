@@ -181,9 +181,6 @@ table td {
     float: right;
 }
 
-.notifications{position:fixed;}
-.notifications.top-right{right:10px;top:45px;}
-
 report-summary .label-androidversion {
     padding-left: 18px;
     background: #468847 url(../img/bugdroid-white.png) no-repeat 1px 1px;
