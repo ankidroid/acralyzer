@@ -181,10 +181,6 @@ table td {
     float: right;
 }
 
-.polling-indicator {
-    margin-top: 16px;
-}
-
 .notifications{position:fixed;}
 .notifications.top-right{right:10px;top:45px;}
 

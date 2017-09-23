@@ -156,7 +156,6 @@
 
         $scope.$on(acralyzerEvents.LOGGED_IN, $scope.getData);
         $scope.$on(acralyzerEvents.LOGGED_OUT, $scope.getData);
-        $scope.$on(acralyzerEvents.BUGS_UPDATED, $scope.getData);
         $scope.getData();
     }
 

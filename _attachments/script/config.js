@@ -2,7 +2,6 @@
     "use strict";
     // Update this variable with the name of your app:
     acralyzerConfig.defaultApp = "ankidroid";
-    acralyzerConfig.backgroundPollingOnStartup = true;
 
     acralyzerConfig.appDBPrefix = "acra-";
     acralyzerConfig.urlPrefix = "";

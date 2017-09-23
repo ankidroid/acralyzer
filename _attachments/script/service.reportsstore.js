@@ -29,10 +29,7 @@
     acralyzer.factory('ReportsStore', ['$rootScope', '$http', '$resource', function($rootScope, $http, $resource) {
         // ReportsStore service instance
         var ReportsStore = {
-            lastseq : -1,
-            continuePolling : true,
             dbName : "",
-            currentWorkerId : 0
         };
 
         // Markdown converter
@@ -49,9 +46,6 @@
             ReportsStore.views = $resource(acralyzerConfig.urlPrefix + '/' + ReportsStore.dbName + '/_design/acra-storage/_view/:view');
             ReportsStore.details = $resource(acralyzerConfig.urlPrefix + '/' + ReportsStore.dbName + '/:reportid');
             ReportsStore.bug = $resource(acralyzerConfig.urlPrefix + '/' + ReportsStore.dbName + '/:bugid', { bugid: '@_id' }, { save: {method: 'PUT'}});
-            ReportsStore.dbstate = $resource(acralyzerConfig.urlPrefix + '/' + ReportsStore.dbName + '/');
-            ReportsStore.changes = $resource(acralyzerConfig.urlPrefix + '/' + ReportsStore.dbName + '/_changes');
-            ReportsStore.lastseq = -1;
             cb();
         };
 
@@ -298,81 +292,6 @@
             });
             return bug;
         };
-
-        // BACKGROUND POLLING MANAGEMENT
-
-        /**
-         * Background polling worker method. If new data is received, the provided callback is executed. Otherwise,
-         * if polling is still ok for this worker, immediately start a new request.
-         * @private
-         * @param {Function} cb Callback to execute when new data is received.
-         * @param {Number} workerId The
-         */
-        ReportsStore.pollChanges = function(cb, workerId) {
-            console.log("Polling changes since = " + ReportsStore.lastseq + " (worker " + workerId + ")");
-            // Store the current dbName on polling start
-            var currentlyPolledDB = ReportsStore.dbName;
-            ReportsStore.changes.get(
-                {feed:'longpoll', since: ReportsStore.lastseq, include_docs: true},
-                function(data){
-                    if(data.last_seq > ReportsStore.lastseq) {
-                        // If the user asked to stop polling or changed DataBase, don't handle the result.
-                        if(ReportsStore.continuePolling && ReportsStore.dbName === currentlyPolledDB && workerId === ReportsStore.currentWorkerId) {
-                            console.log("New changes (worker " + workerId + ")");
-                            cb(data);
-                            ReportsStore.lastseq = data.last_seq;
-                        }
-                    }
-                    if(ReportsStore.continuePolling  && ReportsStore.dbName === currentlyPolledDB && workerId === ReportsStore.currentWorkerId) {
-                        console.log("worker " + workerId + " continues");
-                        ReportsStore.pollChanges(cb, workerId);
-                    } else {
-                        console.log("worker " + workerId + " stops");
-                    }
-                },
-                function() {
-                    console.log("Error while polling changes");
-                    if(ReportsStore.continuePolling) {
-                        ReportsStore.pollChanges(cb);
-                    }
-                }
-            );
-        };
-
-        /**
-         * Initiates a new background polling worker.
-         * @param {function} cb Callback to execute when new data is received.
-         */
-        ReportsStore.startPolling = function(cb) {
-            // Just in case the app has not been initialized yet.
-            if (ReportsStore.dbstate) {
-                ReportsStore.dbstate.get(
-                    {},
-                    // Success
-                    function(data) {
-                        if(ReportsStore.lastseq === -1) {
-                            ReportsStore.lastseq = data.update_seq;
-                        }
-                        console.log("DB status retrieved, last_seq = " + ReportsStore.lastseq);
-                        ReportsStore.continuePolling = true;
-                        ReportsStore.currentWorkerId++;
-                        ReportsStore.pollChanges(cb, ReportsStore.currentWorkerId);
-                    },
-                    // Error
-                    function() {
-                        ReportsStore.continuePolling = false;
-                        $rootScope.$broadcast(acralyzerEvents.POLLING_FAILED);
-                        console.log("Polling failed");
-                    }
-                );
-            }
-        };
-
-        ReportsStore.stopPolling = function() {
-            console.log("STOP POLLING !");
-            ReportsStore.continuePolling = false;
-        };
-
 
         ReportsStore.getUsersForBug = function(bug, cb) {
             var viewParams = {
