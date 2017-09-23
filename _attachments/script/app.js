@@ -119,20 +119,6 @@
         };
     });
 
-    /* http://jsfiddle.net/vojtajina/nycgX/ */
-    acralyzer.directive('initFocus', function() {
-        var timer;
-        return {
-            restrict: 'A',
-            link: function($scope, $element, $attr) {
-                if (timer) { clearTimeout(timer); }
-                timer = setTimeout(function() {
-                    $element.focus();
-                }, 0);
-            }
-        };
-    });
-
     /* http://www.frangular.com/2012/12/pagination-cote-client-directive-angularjs.html */
     acralyzer.directive('paginator', function () {
         var pageSizeLabel = "Page size";
