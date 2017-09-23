@@ -119,29 +119,6 @@
         };
     });
 
-    /* http://jsfiddle.net/S8TYF/ */
-    acralyzer.directive('sameAs', function() {
-        return {
-            require: 'ngModel',
-            link: function(scope, elm, attr, ctrl) {
-                var pwdWidget = elm.inheritedData('$formController')[attr.sameAs];
-
-                ctrl.$parsers.push(function(value) {
-                    if (value === pwdWidget.$viewValue) {
-                        ctrl.$setValidity('MATCH', true);
-                        return value;
-                    }
-                    ctrl.$setValidity('MATCH', false);
-                });
-
-                pwdWidget.$parsers.push(function(value) {
-                    ctrl.$setValidity('MATCH', value === ctrl.$viewValue);
-                    return value;
-                });
-            }
-        };
-    });
-
     /* http://jsfiddle.net/vojtajina/nycgX/ */
     acralyzer.directive('initFocus', function() {
         var timer;
