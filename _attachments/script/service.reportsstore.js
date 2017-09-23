@@ -85,12 +85,6 @@
             return ReportsStore.views.get({view: 'reports-per-day', group_level: grouplvl}, cb, errorHandler);
         };
 
-
-        // 10 latest reports - Key: date/time Value: report digest
-        ReportsStore.recentReports = function(cb, errorHandler) {
-            return ReportsStore.views.get({view: 'recent-items', limit: 10, descending: true}, cb, errorHandler);
-        };
-
         // Key: report ID Value: report digest
         ReportsStore.reportsList = function(startKey, reportsCount, includeDocs, cb, errorHandler) {
             var viewParams = {
