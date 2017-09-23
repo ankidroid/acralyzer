@@ -74,17 +74,6 @@
             $http.get(acralyzerConfig.urlPrefix + '/_all_dbs').success(filterDbsCallback).error(errorHandler);
         };
 
-        /**
-        * Gets the number of reports per unit of time.
-        * @param {Number} grouplvl Grouping level: Year = 1, Month = 2, Day = 3, Hour = 4, Minute = 5, Second = 6.
-        * @param {function} [cb] Callback which receives the results.
-        * @param {function} [errorHandler] Called in case of error while retrieving data
-        * @return Key: date/time, Value: quantity
-        */
-        ReportsStore.reportsPerDay = function(grouplvl, cb, errorHandler) {
-            return ReportsStore.views.get({view: 'reports-per-day', group_level: grouplvl}, cb, errorHandler);
-        };
-
         // Key: report ID Value: report digest
         ReportsStore.reportsList = function(startKey, reportsCount, includeDocs, cb, errorHandler) {
             var viewParams = {
@@ -158,10 +147,6 @@
         // 1 full report
         ReportsStore.reportDetails = function(id, cb) {
             return ReportsStore.details.get({reportid: id}, cb);
-        };
-
-        ReportsStore.reportsPerFieldName = function(fieldName, cb, errorHandler) {
-            return ReportsStore.views.get({view: 'reports-per-' + fieldName, group_level: 1}, cb, errorHandler);
         };
 
         ReportsStore.appVersionsList = function(cb) {
