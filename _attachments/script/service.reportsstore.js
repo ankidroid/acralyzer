@@ -44,7 +44,7 @@
         // Key: report ID Value: report digest
         ReportsStore.reportsList = function(startKey, reportsCount, includeDocs, cb, errorHandler) {
             var viewParams = {
-                view: 'recent-items',
+                view: 'reports',
                 descending: true,
                 limit: reportsCount + 1,
                 include_docs: includeDocs
@@ -68,7 +68,7 @@
         // Key: report ID Value: report digest
         ReportsStore.filteredReportsList = function(filterName, filterValue, pageStartKey, reportsCount, includeDocs, cb, errorHandler) {
             var viewParams = {
-                view: 'recent-items-by-' + filterName,
+                view: 'reports-by-' + filterName,
                 descending: true,
                 limit: reportsCount + 1,
                 include_docs: includeDocs,
@@ -117,11 +117,11 @@
         };
 
         ReportsStore.appVersionsList = function(cb) {
-            return ReportsStore.views.get({view: 'recent-items-by-appver', group_level: 1}, cb);
+            return ReportsStore.views.get({view: 'reports-by-appver', group_level: 1}, cb);
         };
 
         ReportsStore.androidVersionsList = function(cb) {
-            return ReportsStore.views.get({view: 'recent-items-by-androidver', group_level: 1}, cb);
+            return ReportsStore.views.get({view: 'reports-by-androidver', group_level: 1}, cb);
         };
 
         // BUGS MANAGEMENT
