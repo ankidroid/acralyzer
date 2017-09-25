@@ -2,30 +2,17 @@
     <div class="div-table-row header">
         <div class="div-table-cell"></div>
         <div class="div-table-cell">
-            <i class="icon-th-list" ng-click="$parent.orderField = 'value.count'"></i>
-            <span ng-click="$parent.orderDescending = !$parent.orderDescending">
-                <i class="icon-chevron-down" ng-show="$parent.orderField === 'value.count' && $parent.orderDescending"></i>
-                <i class="icon-chevron-up" ng-show="$parent.orderField === 'value.count' && !$parent.orderDescending"></i>
-            </span>
+            <i class="icon-th-list"></i>
         </div>
         <div class="div-table-cell">
-            <i class="icon-time" ng-click="$parent.orderField = 'value.latest'"></i>
-            <span ng-click="$parent.orderDescending = !$parent.orderDescending">
-                <i class="icon-chevron-down" ng-show="$parent.orderField === 'value.latest' && $parent.orderDescending"ng-click=""></i>
-                <i class="icon-chevron-up" ng-show="$parent.orderField === 'value.latest' && !$parent.orderDescending"></i>
-            </span>
+            <i class="icon-time"></i>
         </div>
         <div class="div-table-cell">
-            <i class="icon-gift" ng-click="$parent.orderField = 'key[0]'"></i>
-            <span ng-click="$parent.orderDescending = !$parent.orderDescending">
-                <i class="icon-chevron-down" ng-show="$parent.orderField === 'key[0]' && $parent.orderDescending"ng-click=""></i>
-                <i class="icon-chevron-up" ng-show="$parent.orderField === 'key[0]' && !$parent.orderDescending"></i>
-            </span>
+            <i class="icon-gift"></i>
         </div>
         <div class="div-table-cell exceptions"><i class="icon-fire"></i></div>
     </div>
-    <div class="div-table-row"
-         ng-repeat="bug in pageItems()">
+    <div class="div-table-row" ng-repeat="bug in bugs">
         <div class="div-table-cell actions">
             <a href="#/reports-browser/bug/{{bug.id}}"
                tooltip-html-unsafe="{{bug.descriptionHtml}}" tooltip-placement="right">

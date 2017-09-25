@@ -8,7 +8,7 @@
         <div class="div-table-cell"><i class="icon-phone"></i></div>
         <div class="div-table-cell exceptions"><i class="icon-fire"></i></div>
     </div>
-    <div class="div-table-row" ng-repeat="report in reports | filter:search" ng-class-odd="'odd'" ng-class-even="'even'" ng-cloak>
+    <div class="div-table-row" ng-repeat="report in reports" ng-class-odd="'odd'" ng-class-even="'even'" ng-cloak>
         <div class="div-table-cell actions">
             <a ng-click="loadReport(report)">
                 <i class="icon-search" ng-hide="report.id == selectedReport._id" title="Display details"></i>

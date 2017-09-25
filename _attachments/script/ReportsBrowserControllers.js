@@ -34,7 +34,6 @@
         $scope.nextKey = null;
         $scope.startNumber = 1;
         $scope.endNumber = $scope.paginator.pageSize;
-        $scope.fullSearch = false;
         $scope.loading = true;
         $scope.noFilter = { value: "false", label: "Select filter"};
         $scope.noFilterValue = { value: "false", label: "All values"};
@@ -91,13 +90,13 @@
 
         $scope.getData = function() {
             $scope.loading = true;
+
             var successHandler = function(data) {
-                // Success Handler
                 $scope.reports = data.rows;
                 $scope.totalReports = data.total_rows;
 
                 // If there are more rows, here is the key to the next page
-                $scope.nextKey =data.next_row ? data.next_row.key : null;
+                $scope.nextKey = data.next_row ? data.next_row.key : null;
                 $scope.startNumber = ($scope.previousStartKeys.length * $scope.paginator.pageSize) + 1;
                 $scope.endNumber = $scope.startNumber + $scope.reports.length - 1;
 
@@ -108,28 +107,27 @@
             };
 
             var errorHandler = function(response, getResponseHeaders){
-                // Error Handler
-                $scope.reports=[];
-                $scope.totalReports="";
+                $scope.reports = [];
+                $scope.totalReports = "";
             };
 
             if(($scope.filterName === $scope.noFilter || $scope.filterValue === $scope.noFilterValue) && !$scope.bug && !$scope.selectedUser) {
-                ReportsStore.reportsList($scope.startKey, $scope.paginator.pageSize, $scope.fullSearch, successHandler, errorHandler);
+                ReportsStore.reportsList($scope.startKey, $scope.paginator.pageSize, successHandler, errorHandler);
             } else if($scope.filterName !== $scope.noFilter && $scope.filterValue !== $scope.noFilterValue){
-                ReportsStore.filteredReportsList($scope.filterName.value, $scope.filterValue.value,$scope.startKey, $scope.paginator.pageSize, $scope.fullSearch, successHandler, errorHandler);
+                ReportsStore.filteredReportsList($scope.filterName.value, $scope.filterValue.value,$scope.startKey, $scope.paginator.pageSize, successHandler, errorHandler);
             } else if($scope.bug) {
                 if($scope.selectedUser) {
                     // Filter by bug AND user
                     var filterKey = $scope.bug.key.slice(0);
                     filterKey.push($scope.selectedUser.installationId);
-                    ReportsStore.filteredReportsList("bug-by-installation-id", filterKey, $scope.startKey, $scope.paginator.pageSize, $scope.fullSearch, successHandler, errorHandler);
+                    ReportsStore.filteredReportsList("bug-by-installation-id", filterKey, $scope.startKey, $scope.paginator.pageSize, successHandler, errorHandler);
                 } else {
                     // Filter by bug only
-                    ReportsStore.filteredReportsList("bug", $scope.bug.key, $scope.startKey, $scope.paginator.pageSize, $scope.fullSearch, successHandler, errorHandler);
+                    ReportsStore.filteredReportsList("bug", $scope.bug.key, $scope.startKey, $scope.paginator.pageSize, successHandler, errorHandler);
                 }
             } else if($scope.selectedUser) {
                 // Filter by user only
-                ReportsStore.filteredReportsList("installation-id", $scope.selectedUser.installationId, $scope.startKey, $scope.paginator.pageSize, $scope.fullSearch, successHandler, errorHandler);
+                ReportsStore.filteredReportsList("installation-id", $scope.selectedUser.installationId, $scope.startKey, $scope.paginator.pageSize, successHandler, errorHandler);
             }
         };
 

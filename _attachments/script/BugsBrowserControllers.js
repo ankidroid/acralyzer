@@ -22,27 +22,18 @@
     function BugsBrowserCtrl($scope, ReportsStore, $routeParams) {
 
         console.log("Init BugsBrowserCtrl");
-        $scope.bugsList = [];
-        $scope.bugsCount = 15;
-        $scope.hideSolvedBugs = true;
+        $scope.paginator = {
+            pageSize: 100,
+            currentPage: 0
+        };
+        $scope.pageSizeList = [15, 30, 50, 100, 500];
+
         $scope.previousStartKeys = [];
         $scope.startKey = null;
         $scope.nextKey = null;
         $scope.startNumber = 1;
-        $scope.endNumber = $scope.bugsCount;
-        $scope.fullSearch = false;
+        $scope.endNumber = $scope.paginator.pageSize;
         $scope.loading = true;
-        $scope.noFilter = { value: "false", label: "Select filter"};
-        $scope.noFilterValue = { value: "false", label: "All values"};
-        $scope.availableFilters = [
-            {value: "appvercode", label: "Application version code"}
-        ];
-        $scope.filterName = $scope.noFilter;
-        $scope.filterValue = $scope.noFilterValue;
-
-        $scope.filterValues = [];
-        $scope.orderField = 'value.count';
-        $scope.orderDescending = true;
 
         // List animations
         $scope.animationFade = {
@@ -109,49 +100,71 @@
             }
         };
 
+        $scope.incPage = function() {
+            $scope.previousStartKeys.push($scope.startKey);
+            $scope.startKey = $scope.nextKey;
+            $scope.getData();
+        };
+
+        $scope.decPage = function() {
+            $scope.nextKey = null;
+            $scope.startKey = $scope.previousStartKeys.pop();
+            $scope.getData();
+        };
+
+        $scope.isFirstPage = function() {
+            return $scope.previousStartKeys.length <= 0;
+        };
+
+        $scope.isLastPage = function() {
+            return $scope.nextKey === null;
+        };
+
+        $scope.firstPage = function() {
+            $scope.startKey = null;
+            $scope.nextKey = null;
+            $scope.getData();
+        };
+
+        $scope.$watch('paginator.pageSize', function(newValue, oldValue){
+            if (newValue !== oldValue) {
+                $scope.firstPage();
+            }
+        });
 
         $scope.getData = function() {
 //            $scope.loading = true;
-            ReportsStore.bugsList(function(data) {
-                    $scope.listAnimation = $scope.animationFade;
-                    console.log("Refresh data for latest bugs");
-                    console.log(data);
-                    mergeBugsLists($scope.bugsList, data.rows);
-                    $scope.totalBugs = data.total_rows;
-                    for(var row = 0; row < $scope.bugsList.length; row++) {
-                        $scope.bugsList[row].latest = moment($scope.bugsList[row].value.latest).fromNow();
-                    }
-                    $scope.loading = false;
-                },
-                function(response, getResponseHeaders){
-                    $scope.bugsList=[];
-                    $scope.totalBugs="";
-                    $scope.loading = false;
+
+            var successHandler = function(data) {
+                $scope.bugs = data.rows;
+
+                // If there are more rows, here is the key to the next page
+                $scope.nextKey = data.next_row ? data.next_row.key : null;
+                $scope.startNumber = ($scope.previousStartKeys.length * $scope.paginator.pageSize) + 1;
+                $scope.endNumber = $scope.startNumber + $scope.bugs.length - 1;
+
+                $scope.listAnimation = $scope.animationFade;
+                console.log("Refresh data for latest bugs");
+                console.log(data);
+                mergeBugsLists($scope.bugs, data.rows);
+                for(var row = 0; row < $scope.bugs.length; row++) {
+                    $scope.bugs[row].latest = moment($scope.bugs[row].value.latest).fromNow();
                 }
-            );
-        };
+                $scope.loading = false;
+            };
 
-        $scope.shouldBeDisplayed = function(bug) {
-            if($scope.hideSolvedBugs && bug.value.solved) {
-                return false;
-            } else {
-                return true;
-            }
-        };
+            var errorHandler = function(response, getResponseHeaders){
+                $scope.bugs = [];
+                $scope.loading = false;
+            };
 
-        $scope.filterValueSelected = function() {
-            // reset pagination
-            $scope.startKey = null;
-            $scope.nextKey = null;
-            $scope.previousStartKeys.length = 0;
-            $scope.getData();
+            ReportsStore.bugsList($scope.startKey, $scope.paginator.pageSize, successHandler, errorHandler);
         };
 
         $scope.$on(acralyzerEvents.LOGGED_IN, $scope.getData);
         $scope.$on(acralyzerEvents.LOGGED_OUT, $scope.getData);
         $scope.getData();
     }
-
 
     acralyzer.controller('BugsBrowserCtrl', ["$scope", "ReportsStore", "$routeParams", BugsBrowserCtrl]);
 

@@ -42,12 +42,11 @@
         var converter = new Showdown.converter({extensions:['github','table']});
 
         // Key: report ID Value: report digest
-        ReportsStore.reportsList = function(startKey, reportsCount, includeDocs, cb, errorHandler) {
+        ReportsStore.reportsList = function(startKey, reportsCount, cb, errorHandler) {
             var viewParams = {
                 view: 'reports',
                 descending: true,
-                limit: reportsCount + 1,
-                include_docs: includeDocs
+                limit: reportsCount + 1
             };
             if(startKey !== null) {
                 viewParams.startkey = '"' + startKey + '"';
@@ -66,12 +65,11 @@
         };
 
         // Key: report ID Value: report digest
-        ReportsStore.filteredReportsList = function(filterName, filterValue, pageStartKey, reportsCount, includeDocs, cb, errorHandler) {
+        ReportsStore.filteredReportsList = function(filterName, filterValue, pageStartKey, reportsCount, cb, errorHandler) {
             var viewParams = {
                 view: 'reports-by-' + filterName,
                 descending: true,
                 limit: reportsCount + 1,
-                include_docs: includeDocs,
                 reduce: false
             };
 
@@ -133,12 +131,16 @@
             }
         };
 
-        ReportsStore.bugsList = function(cb, errorHandler) {
+        ReportsStore.bugsList = function(startKey, bugsCount, cb, errorHandler) {
             var viewParams = {
                 view: 'bugs',
                 descending: true,
-                group: true
+                group: true,
+                limit: bugsCount + 1
             };
+            if(startKey !== null) {
+                viewParams.startkey = JSON.stringify(startKey);
+            }
 
             var bugEqualityTest = function(bug2) {
                 if(this.value.latest !== bug2.value.latest ||
@@ -174,6 +176,9 @@
             };
 
             var additionalCallback = function(data) {
+                if(data.rows && (data.rows.length > bugsCount)) {
+                    data.next_row = data.rows.splice(bugsCount, 1)[0];
+                }
                 // The bug view does not return individual documents. Unless data has been specifically updated about
                 // one bug, there is no bug document in a database. We add here the computed id of each 'virtual' bug.
                 for (var i = 0; i < data.rows.length; i++) {
