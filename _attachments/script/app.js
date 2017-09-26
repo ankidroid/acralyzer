@@ -95,7 +95,6 @@
             },
             templateUrl: 'partials/bug-details.html',
             controller: ['$scope', '$element', '$attrs', '$transclude', 'ReportsStore', function($scope, $element, $attrs, $transclude, ReportsStore) {
-                console.log("In the controller for bugDetails with scope:");
                 $scope.nbUsersToDisplay = 10;
                 $scope.selectedUser = {};
                 $scope.incNbUsersToDisplay = function(nb) {

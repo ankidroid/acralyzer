@@ -21,7 +21,6 @@
 
     function ReportsBrowserCtrl($scope, ReportsStore, $routeParams) {
 
-        console.log("Init ReportsBrowserCtrl");
         $scope.paginator = {
             pageSize: 30,
             currentPage: 0
@@ -146,7 +145,6 @@
 
                 if(getFilteredValues) {
                     getFilteredValues(function(data){
-                        console.log("Update filter values");
                         $scope.filterValues.length = 0;
                         $scope.filterValues.push($scope.noFilterValue);
                         for(var row = 0; row < data.rows.length; row++) {
@@ -228,7 +226,6 @@
 
 
         $scope.filterWithUser = function(user) {
-            console.log("Selected user:", user);
             $scope.selectedUser = user;
             $scope.firstPage();
             $scope.getData();

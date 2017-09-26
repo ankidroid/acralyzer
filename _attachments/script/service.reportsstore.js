@@ -201,8 +201,6 @@
                 var state = curBug.solved;
                 curBug.$save(function(data) {
                     bug.value.solved = state;
-                    console.log("bug is now:");
-                    console.log(bug);
                     callback(data);
                 });
             }, function() {
@@ -257,12 +255,9 @@
         ReportsStore.getBugForId = function(bugId, cb) {
             var bug = {};
             ReportsStore.bugsList(function(data) {
-                console.log("looking for bug with id " + bugId);
                 for (var i = 0; i < data.rows.length; i++) {
                     if (data.rows[i].id === bugId) {
                         bug = data.rows[i];
-                        console.log("Bug found:");
-                        console.log(bug);
                         break;
                     }
                 }

@@ -21,7 +21,6 @@
 
     function BugsBrowserCtrl($scope, ReportsStore, $routeParams) {
 
-        console.log("Init BugsBrowserCtrl");
         $scope.paginator = {
             pageSize: 30,
             currentPage: 0
@@ -52,12 +51,10 @@
 
         $scope.setNextPageAnimation = function() {
             $scope.listAnimation = $scope.animationNextPage;
-            console.log("setNextPageAnimation");
         };
 
         $scope.setPreviousPageAnimation = function() {
             $scope.listAnimation = $scope.animationPreviousPage;
-            console.log("setPreviousPageAnimation");
         };
 
         $scope.getListAnimation = function() {
@@ -144,8 +141,6 @@
                 $scope.endNumber = $scope.startNumber + $scope.bugs.length - 1;
 
                 $scope.listAnimation = $scope.animationFade;
-                console.log("Refresh data for latest bugs");
-                console.log(data);
                 mergeBugsLists($scope.bugs, data.rows);
                 for(var row = 0; row < $scope.bugs.length; row++) {
                     $scope.bugs[row].latest = moment($scope.bugs[row].value.latest).fromNow();
