@@ -247,25 +247,6 @@
             });
         };
 
-        /**
-         * Gets a single bug from its Id.
-         * @param bugId
-         * @param cb
-         */
-        ReportsStore.getBugForId = function(bugId, cb) {
-            var bug = {};
-            ReportsStore.bugsList(function(data) {
-                for (var i = 0; i < data.rows.length; i++) {
-                    if (data.rows[i].id === bugId) {
-                        bug = data.rows[i];
-                        break;
-                    }
-                }
-                cb(bug);
-            });
-            return bug;
-        };
-
         ReportsStore.getUsersForBug = function(bug, cb) {
             var viewParams = {
                 view: 'users-per-bug',

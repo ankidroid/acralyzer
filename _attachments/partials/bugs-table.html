@@ -14,21 +14,16 @@
     </div>
     <div class="div-table-row" ng-repeat="bug in bugs">
         <div class="div-table-cell actions">
-            <a href="#/reports-browser/bug/{{bug.id}}"
-               tooltip-html-unsafe="{{bug.descriptionHtml}}" tooltip-placement="right">
-                <i class="icon-search" ng-hide="bug.value.description"></i>
-                <i class="icon-zoom-in" ng-show="bug.value.description"></i>
-            </a>
             <a ng-click="bug.toggleSolved()">
                 <span title="Unsolved bug" ng-hide="bug.value.solved || bug.solvedPending"><i class="icon-bug-unsolved"></i></span>
                 <span title="Solved bug" ng-show="bug.value.solved && !bug.solvedPending"><i class="icon-bug-solved"></i></span>
                 <span title="Updating state" ng-show="bug.solvedPending"><img src="img/polling.gif"/></span>
             </a>
         </div>
-        <a href="#/reports-browser/bug/{{bug.id}}" title="Number of reports" class="div-table-cell label">{{bug.value.count}}</a>
-        <a href="#/reports-browser/bug/{{bug.id}}" title="Latest report" class="div-table-cell label label-info">{{bug.latest}}</a>
-        <a href="#/reports-browser/bug/{{bug.id}}" title="Application version code" class="div-table-cell label label-warning">{{bug.key[0]}}</a>
-        <a href="#/reports-browser/bug/{{bug.id}}" class="div-table-cell exceptions">
+        <span title="Number of reports" class="div-table-cell label">{{bug.value.count}}</span>
+        <span title="Latest report" class="div-table-cell label label-info">{{bug.latest}}</span>
+        <span title="Application version code" class="div-table-cell label label-warning">{{bug.key[0]}}</span>
+        <span class="div-table-cell exceptions">
             <span title="Exception" class="label label-important">{{bug.key[1]}}</span><br/>
             <span title="Root exception" class="label label-inverse" ng-show="bug.key[2]">Caused by: {{bug.key[2]}}</span>
         </a>

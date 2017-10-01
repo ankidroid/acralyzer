@@ -24,7 +24,6 @@
     acralyzer.config(['$routeProvider', function($routeProvider) {
         $routeProvider.
             when('/reports-browser', {templateUrl: 'partials/reports-browser.html', controller: 'ReportsBrowserCtrl', activetab: "reports-browser"}).
-            when('/reports-browser/bug/:bugId', {templateUrl: 'partials/reports-browser.html', controller: 'ReportsBrowserCtrl', activetab: "reports-browser"}).
             when('/reports-browser/user/:installationId', {templateUrl: 'partials/reports-browser.html', controller: 'ReportsBrowserCtrl', activetab: "reports-browser"}).
             when('/bugs-browser', {templateUrl: 'partials/bugs-browser.html', controller: 'BugsBrowserCtrl', activetab: "bugs-browser"}).
             when('/report-details/:reportId', {templateUrl: 'partials/report-details.html', controller: 'ReportDetailsCtrl', activetab: "none"}).
@@ -83,38 +82,6 @@
                 acralyzer: '='
             },
             templateUrl: 'partials/report-details.html'
-        };
-    });
-
-    acralyzer.directive('bugDetails', function() {
-        return {
-            restrict: 'E',
-            scope: {
-                bug: '=',
-                acralyzer: '='
-            },
-            templateUrl: 'partials/bug-details.html',
-            controller: ['$scope', '$element', '$attrs', '$transclude', 'ReportsStore', function($scope, $element, $attrs, $transclude, ReportsStore) {
-                $scope.nbUsersToDisplay = 10;
-                $scope.selectedUser = {};
-                $scope.incNbUsersToDisplay = function(nb) {
-                    $scope.nbUsersToDisplay += nb;
-                };
-                $scope.selectUser = function(user) {
-                    if($scope.selectedUser.installationId !== user.installationId) {
-                        $scope.selectedUser = user;
-                        $scope.$parent.filterWithUser(user);
-                    } else {
-                        $scope.selectedUser = {};
-                        $scope.$parent.filterWithUser(null);
-                    }
-                };
-                $scope.$watch('bug', function(newValue, oldValue) {
-                    if(newValue) {
-                        $scope.users = ReportsStore.getUsersForBug(newValue);
-                    }
-                });
-            }]
         };
     });
 

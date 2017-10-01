@@ -46,10 +46,6 @@
 
         $scope.filterValues = [];
 
-        // Filtering by bugId
-        $scope.bugId = $routeParams.bugId;
-        $scope.bug = null;
-
         // Filtering by installation_id
         if($routeParams.installationId) {
             $scope.selectedUser = { installationId: $routeParams.installationId };
@@ -100,9 +96,6 @@
                 $scope.endNumber = $scope.startNumber + $scope.reports.length - 1;
 
                 $scope.loading = false;
-                if($scope.bugId) {
-                    $scope.loadReport($scope.reports[0]);
-                }
             };
 
             var errorHandler = function(response, getResponseHeaders){
@@ -110,20 +103,10 @@
                 $scope.totalReports = "";
             };
 
-            if(($scope.filterName === $scope.noFilter || $scope.filterValue === $scope.noFilterValue) && !$scope.bug && !$scope.selectedUser) {
+            if(($scope.filterName === $scope.noFilter || $scope.filterValue === $scope.noFilterValue) && !$scope.selectedUser) {
                 ReportsStore.reportsList($scope.startKey, $scope.paginator.pageSize, successHandler, errorHandler);
             } else if($scope.filterName !== $scope.noFilter && $scope.filterValue !== $scope.noFilterValue){
                 ReportsStore.filteredReportsList($scope.filterName.value, $scope.filterValue.value,$scope.startKey, $scope.paginator.pageSize, successHandler, errorHandler);
-            } else if($scope.bug) {
-                if($scope.selectedUser) {
-                    // Filter by bug AND user
-                    var filterKey = $scope.bug.key.slice(0);
-                    filterKey.push($scope.selectedUser.installationId);
-                    ReportsStore.filteredReportsList("bug-by-installation-id", filterKey, $scope.startKey, $scope.paginator.pageSize, successHandler, errorHandler);
-                } else {
-                    // Filter by bug only
-                    ReportsStore.filteredReportsList("bug", $scope.bug.key, $scope.startKey, $scope.paginator.pageSize, successHandler, errorHandler);
-                }
             } else if($scope.selectedUser) {
                 // Filter by user only
                 ReportsStore.filteredReportsList("installation-id", $scope.selectedUser.installationId, $scope.startKey, $scope.paginator.pageSize, successHandler, errorHandler);
@@ -187,42 +170,9 @@
             });
         };
 
-        if($scope.bugId) {
-            ReportsStore.getBugForId($scope.bugId, function(bug){
-                // success callback
-                $scope.bug = bug;
-                $scope.bug.editMode = false;
-                $scope.bug.toggleEditMode = function() {
-                    if($scope.bug.editMode && $scope.bug.initialDescription !== $scope.bug.value.description) {
-                        // User has modified the description and wants to save it
-                        $scope.bug.updating = true;
-                        ReportsStore.saveBug(bug, function() {
-                            $scope.bug.updating = false;
-                            $scope.bug.initialDescription = $scope.bug.value.description;
-                        });
-                    }
-                    $scope.bug.editMode = !$scope.bug.editMode;
-                };
-
-                $scope.bug.initialDescription = $scope.bug.value.description;
-                $scope.bug.revertDescription = function() {
-                    $scope.bug.value.description = $scope.bug.initialDescription;
-                };
-
-                $scope.getData();
-            });
-        } else {
-            $scope.getData();
-        }
+        $scope.getData();
 
         var converter = new Showdown.converter({extensions:['github','table']});
-
-        // When description is updated, re-generate its rendered html version
-        $scope.$watch('bug.value.description', function(newValue, oldValue) {
-            if(newValue !== oldValue) {
-                $scope.bug.descriptionHtml = converter.makeHtml(newValue);
-            }
-        });
 
 
         $scope.filterWithUser = function(user) {
