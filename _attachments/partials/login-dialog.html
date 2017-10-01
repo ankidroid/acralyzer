@@ -6,7 +6,7 @@
           <div ng-class="{ 'control-group': true, 'error': loginForm.username.$invalid || badUsername }">
               <label class="control-label" for="username">Username</label>
               <div class="controls">
-                  <input ng-model="username" name="username" type="text" required />
+                  <input ng-model="username" name="username" type="text" required>
                   <span class="help-inline" ng-show="loginForm.username.$error.required">Required!</span><br>
                   <span class="help-inline" ng-show="badUsername">Bad username or password</span><br>
               </div>
@@ -14,13 +14,13 @@
           <div ng-class="{ 'control-group': true, 'error': loginForm.password.$invalid }">
               <label class="control-label" for="password">Password</label>
               <div class="controls">
-                  <input ng-model="password" name="password" type="password" required />
+                  <input ng-model="password" name="password" type="password" required>
                   <span class="help-inline" ng-show="loginForm.password.$error.required">Required!</span><br>
               </div>
           </div>
     </div>
     <div class="modal-footer">
-        <img src="img/not-polling.gif" ng-show="pending" alt="pending transaction" />
+        <img src="img/not-polling.gif" ng-show="pending" alt="pending transaction">
         <button class="btn btn-primary" ng-click="close()" data-my-disabled="!loginForm.$valid" ng-disabled='!loginForm.$valid' >Login</button>
     </div>
 </form>

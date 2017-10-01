@@ -17,14 +17,14 @@
             <a ng-click="bug.toggleSolved()">
                 <span title="Unsolved bug" ng-hide="bug.value.solved || bug.solvedPending"><i class="icon-bug-unsolved"></i></span>
                 <span title="Solved bug" ng-show="bug.value.solved && !bug.solvedPending"><i class="icon-bug-solved"></i></span>
-                <span title="Updating state" ng-show="bug.solvedPending"><img src="img/polling.gif"/></span>
+                <span title="Updating state" ng-show="bug.solvedPending"><img src="img/polling.gif"></span>
             </a>
         </div>
         <span title="Number of reports" class="div-table-cell label">{{bug.value.count}}</span>
         <span title="Latest report" class="div-table-cell label label-info">{{bug.latest}}</span>
         <span title="Application version code" class="div-table-cell label label-warning">{{bug.key[0]}}</span>
         <span class="div-table-cell exceptions">
-            <span title="Exception" class="label label-important">{{bug.key[1]}}</span><br/>
+            <span title="Exception" class="label label-important">{{bug.key[1]}}</span><br>
             <span title="Root exception" class="label label-inverse" ng-show="bug.key[2]">Caused by: {{bug.key[2]}}</span>
         </a>
     </div>

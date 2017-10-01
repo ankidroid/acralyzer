@@ -16,8 +16,9 @@
  You should have received a copy of the GNU General Public License
  along with Acralyzer.  If not, see <http://www.gnu.org/licenses/>.
  */
-(function(acralyzerConfig,acralyzer,acralyzerEvents,$,location) {
+(function(acralyzerConfig, acralyzer, acralyzerEvents, $, location) {
     "use strict";
+
     /**
     * Couchdb user service
     *
@@ -25,8 +26,8 @@
     * @singleton
     * @static
     */
-    acralyzer.service('$user', ['$rootScope', '$q', '$resource', '$http', function($rootScope, $q, $resource, $http) {
-        var SessionResource = $resource(acralyzerConfig.urlPrefix + '/_session');
+    acralyzer.service("$user", ["$rootScope", "$q", "$resource", "$http", function($rootScope, $q, $resource, $http) {
+        var SessionResource = $resource(acralyzerConfig.urlPrefix + "/_session");
         var UserResource;
         var acralyzerDbName = location.pathname.split("/")[1];
 
@@ -70,9 +71,9 @@
             if (!UserResource)
             {
                 UserResource = $resource(
-                    '/' + data.info.authentication_db + '/org.couchdb.user\\::name',
-                    {'name':'@name'},
-                    {'save': { method: 'PUT' } }
+                    "/" + data.info.authentication_db + "/org.couchdb.user\\::name",
+                    {"name": "@name"},
+                    {"save": { method: "PUT" } }
                 );
             }
             /* Grab user session after login */
@@ -111,16 +112,16 @@
             var newSession = new SessionResource(data);
             */
             var _newSessionPromise = $http.post(
-                acralyzerConfig.urlPrefix + '/_session',
+                acralyzerConfig.urlPrefix + "/_session",
                 $.param(data),
                 {
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
                     }
                 }
             );
             _newSessionPromise.then(function(sess) {
-                /* Apparently admin user doesn't return the ctx properly, so lets fetch it */
+                /* Apparently admin user doesn"t return the ctx properly, so lets fetch it */
                 _session = SessionResource.get({}, function(a) {
                     /* success */
                     _processSession(a);
@@ -152,7 +153,7 @@
         };
 
         /**
-         * Is the current logged in user a 'reader'
+         * Is the current logged in user a "reader"
          *
          * @method isReader
          * @return {Boolean} True if user is allowed to read data
@@ -176,12 +177,13 @@
                 /* success */
                 _processSession(a);
             }, function() {
-                alert('Unable to connect to couchdb');
+                alert("Unable to connect to couchdb");
                 /* failure */
             });
         };
 
         return $user;
+
     }]);
 
 })(window.acralyzerConfig, window.acralyzer, window.acralyzerEvents, window.jQuery, window.location);

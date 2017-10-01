@@ -16,7 +16,7 @@
  You should have received a copy of the GNU General Public License
  along with Acralyzer.  If not, see <http://www.gnu.org/licenses/>.
  */
-(function(acralyzerConfig,angular,acralyzerEvents,acralyzer,hex_md5,Showdown) {
+(function(acralyzerConfig, acralyzer, hex_md5, Showdown) {
     "use strict";
 
     /**
@@ -26,30 +26,30 @@
      * @singleton
      * @static
      */
-    acralyzer.factory('ReportsStore', ['$rootScope', '$http', '$resource', function($rootScope, $http, $resource) {
+    acralyzer.factory("ReportsStore", ["$rootScope", "$http", "$resource", function($rootScope, $http, $resource) {
 
         var dbName = acralyzerConfig.appDBPrefix + acralyzerConfig.app;
 
         // ReportsStore service instance
         var ReportsStore = {
             dbName: dbName,
-            views: $resource(acralyzerConfig.urlPrefix + '/' + dbName + '/_design/acra-storage/_view/:view'),
-            details: $resource(acralyzerConfig.urlPrefix + '/' + dbName + '/:reportid'),
-            bug: $resource(acralyzerConfig.urlPrefix + '/' + dbName + '/:bugid', { bugid: '@_id' }, { save: {method: 'PUT'}})
+            views: $resource(acralyzerConfig.urlPrefix + "/" + dbName + "/_design/acra-storage/_view/:view"),
+            details: $resource(acralyzerConfig.urlPrefix + "/" + dbName + "/:reportid"),
+            bug: $resource(acralyzerConfig.urlPrefix + "/" + dbName + "/:bugid", { bugid: "@_id" }, { save: {method: "PUT"}})
         };
 
         // Markdown converter
-        var converter = new Showdown.converter({extensions:['github','table']});
+        var converter = new Showdown.converter({extensions: ["github", "table"]});
 
         // Key: report ID Value: report digest
         ReportsStore.reportsList = function(startKey, reportsCount, cb, errorHandler) {
             var viewParams = {
-                view: 'reports',
+                view: "reports",
                 descending: true,
                 limit: reportsCount + 1
             };
             if(startKey !== null) {
-                viewParams.startkey = '"' + startKey + '"';
+                viewParams.startkey = "\"" + startKey + "\"";
             }
 
             var additionalCallback = function(data) {
@@ -67,7 +67,7 @@
         // Key: report ID Value: report digest
         ReportsStore.filteredReportsList = function(filterName, filterValue, pageStartKey, reportsCount, cb, errorHandler) {
             var viewParams = {
-                view: 'reports-by-' + filterName,
+                view: "reports-by-" + filterName,
                 descending: true,
                 limit: reportsCount + 1,
                 reduce: false
@@ -81,7 +81,7 @@
                 viewParams.startkey = JSON.stringify(startKeyValue);
             } else {
                 viewParams.endkey = JSON.stringify([filterValue]);
-                viewParams.startkey = JSON.stringify([filterValue,{}]);
+                viewParams.startkey = JSON.stringify([filterValue, {}]);
             }
 
             if(pageStartKey !== null) {
@@ -115,11 +115,11 @@
         };
 
         ReportsStore.appVersionsList = function(cb) {
-            return ReportsStore.views.get({view: 'reports-by-appver', group_level: 1}, cb);
+            return ReportsStore.views.get({view: "reports-by-appver", group_level: 1}, cb);
         };
 
         ReportsStore.androidVersionsList = function(cb) {
-            return ReportsStore.views.get({view: 'reports-by-androidver', group_level: 1}, cb);
+            return ReportsStore.views.get({view: "reports-by-androidver", group_level: 1}, cb);
         };
 
         // BUGS MANAGEMENT
@@ -133,7 +133,7 @@
 
         ReportsStore.bugsList = function(startKey, bugsCount, cb, errorHandler) {
             var viewParams = {
-                view: 'bugs',
+                view: "bugs",
                 descending: true,
                 group: true,
                 limit: bugsCount + 1
@@ -170,7 +170,7 @@
             var toggleSolved = function() {
                 var bug = this;
                 this.solvedPending = true;
-                ReportsStore.toggleSolvedBug(bug, function(data){
+                ReportsStore.toggleSolvedBug(bug, function(data) {
                     bug.solvedPending = false;
                 });
             };
@@ -180,7 +180,7 @@
                     data.next_row = data.rows.splice(bugsCount, 1)[0];
                 }
                 // The bug view does not return individual documents. Unless data has been specifically updated about
-                // one bug, there is no bug document in a database. We add here the computed id of each 'virtual' bug.
+                // one bug, there is no bug document in a database. We add here the computed id of each "virtual" bug.
                 for (var i = 0; i < data.rows.length; i++) {
                     data.rows[i].id = computeBugId(data.rows[i]);
                     data.rows[i].equals = bugEqualityTest;
@@ -249,7 +249,7 @@
 
         ReportsStore.getUsersForBug = function(bug, cb) {
             var viewParams = {
-                view: 'users-per-bug',
+                view: "users-per-bug",
                 reduce: true,
                 group_level: 4
             };
@@ -257,7 +257,7 @@
             viewParams.startkey = JSON.stringify([bug.key[0], bug.key[1], bug.key[2]]);
             viewParams.endkey = JSON.stringify([bug.key[0], bug.key[1], bug.key[2], {}]);
             var result = [];
-            ReportsStore.views.get(viewParams,function(data) {
+            ReportsStore.views.get(viewParams, function(data) {
                 for(var row = 0; row < data.rows.length; row++) {
                     var user = {
                         installationId: data.rows[row].key[3],
@@ -273,6 +273,7 @@
         };
 
         return ReportsStore;
+
     }]);
 
-})(window.acralyzerConfig,window.angular,window.acralyzerEvents,window.acralyzer,window.hex_md5,window.Showdown);
+})(window.acralyzerConfig, window.acralyzer, window.hex_md5, window.Showdown);

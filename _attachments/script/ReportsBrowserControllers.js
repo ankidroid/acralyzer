@@ -16,7 +16,7 @@
  You should have received a copy of the GNU General Public License
  along with Acralyzer.  If not, see <http://www.gnu.org/licenses/>.
  */
-(function(acralyzerConfig,angular,acralyzer,acralyzerEvents,Showdown) {
+(function(acralyzer, acralyzerEvents, Showdown) {
     "use strict";
 
     function ReportsBrowserCtrl($scope, ReportsStore, $routeParams) {
@@ -77,7 +77,7 @@
             $scope.getData();
         };
 
-        $scope.$watch('paginator.pageSize', function(newValue, oldValue){
+        $scope.$watch("paginator.pageSize", function(newValue, oldValue) {
             if (newValue !== oldValue) {
                 $scope.firstPage();
             }
@@ -98,7 +98,7 @@
                 $scope.loading = false;
             };
 
-            var errorHandler = function(response, getResponseHeaders){
+            var errorHandler = function(response, getResponseHeaders) {
                 $scope.reports = [];
                 $scope.totalReports = "";
                 $scope.loading = false;
@@ -106,8 +106,8 @@
 
             if(($scope.filterName === $scope.noFilter || $scope.filterValue === $scope.noFilterValue) && !$scope.selectedUser) {
                 ReportsStore.reportsList($scope.startKey, $scope.paginator.pageSize, successHandler, errorHandler);
-            } else if($scope.filterName !== $scope.noFilter && $scope.filterValue !== $scope.noFilterValue){
-                ReportsStore.filteredReportsList($scope.filterName.value, $scope.filterValue.value,$scope.startKey, $scope.paginator.pageSize, successHandler, errorHandler);
+            } else if($scope.filterName !== $scope.noFilter && $scope.filterValue !== $scope.noFilterValue) {
+                ReportsStore.filteredReportsList($scope.filterName.value, $scope.filterValue.value, $scope.startKey, $scope.paginator.pageSize, successHandler, errorHandler);
             } else if($scope.selectedUser) {
                 // Filter by user only
                 ReportsStore.filteredReportsList("installation-id", $scope.selectedUser.installationId, $scope.startKey, $scope.paginator.pageSize, successHandler, errorHandler);
@@ -128,11 +128,11 @@
                 }
 
                 if(getFilteredValues) {
-                    getFilteredValues(function(data){
+                    getFilteredValues(function(data) {
                         $scope.filterValues.length = 0;
                         $scope.filterValues.push($scope.noFilterValue);
                         for(var row = 0; row < data.rows.length; row++) {
-                            $scope.filterValues.push({value:data.rows[row].key[0], label:data.rows[row].key[0]});
+                            $scope.filterValues.push({value: data.rows[row].key[0], label: data.rows[row].key[0]});
                         }
                         $scope.filterValues.sort();
                     });
@@ -150,15 +150,15 @@
 
         $scope.loadReport = function(report) {
             $scope.selectedReport = ReportsStore.reportDetails(report.id, function(data) {
-                data.readableUptime = moment.duration(data.uptime, 'seconds').humanize();
-                data.formatedCrashDate = moment(data.USER_CRASH_DATE).format('LLL');
-                data.formatedTimestamp = moment(data.timestamp).format('LLL');
+                data.readableUptime = moment.duration(data.uptime, "seconds").humanize();
+                data.formatedCrashDate = moment(data.USER_CRASH_DATE).format("LLL");
+                data.formatedTimestamp = moment(data.timestamp).format("LLL");
             });
             document.getElementById("report-details-id").scrollIntoView();
         };
 
         $scope.deleteReport = function(report) {
-            if (!confirm('Delete report?')) {
+            if (!confirm("Delete report?")) {
                 return;
             }
             if($scope.selectedReport === report) {
@@ -173,7 +173,7 @@
 
         $scope.getData();
 
-        var converter = new Showdown.converter({extensions:['github','table']});
+        var converter = new Showdown.converter({extensions: ["github", "table"]});
 
 
         $scope.filterWithUser = function(user) {
@@ -187,6 +187,6 @@
     }
 
 
-    acralyzer.controller('ReportsBrowserCtrl', ["$scope", "ReportsStore", "$routeParams", ReportsBrowserCtrl]);
+    acralyzer.controller("ReportsBrowserCtrl", ["$scope", "ReportsStore", "$routeParams", ReportsBrowserCtrl]);
 
-})(window.acralyzerConfig,window.angular,window.acralyzer,window.acralyzerEvents,window.Showdown);
+})(window.acralyzer, window.acralyzerEvents, window.Showdown);

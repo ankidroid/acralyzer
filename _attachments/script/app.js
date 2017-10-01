@@ -16,73 +16,69 @@
  You should have received a copy of the GNU General Public License
  along with Acralyzer.  If not, see <http://www.gnu.org/licenses/>.
  */
-(function(acralyzerConfig, angular, $, acralyzerEvents, prettyPrint) {
+(function(angular, prettyPrint) {
     "use strict";
 
-    var acralyzer = window.acralyzer = angular.module('Acralyzer', ['ui.bootstrap', 'ngResource']);
+    var acralyzer = window.acralyzer = angular.module("Acralyzer", ["ui.bootstrap", "ngResource"]);
 
-    acralyzer.config(['$routeProvider', function($routeProvider) {
+    acralyzer.config(["$routeProvider", function($routeProvider) {
         $routeProvider.
-            when('/reports-browser', {templateUrl: 'partials/reports-browser.html', controller: 'ReportsBrowserCtrl', activetab: "reports-browser"}).
-            when('/reports-browser/user/:installationId', {templateUrl: 'partials/reports-browser.html', controller: 'ReportsBrowserCtrl', activetab: "reports-browser"}).
-            when('/bugs-browser', {templateUrl: 'partials/bugs-browser.html', controller: 'BugsBrowserCtrl', activetab: "bugs-browser"}).
-            when('/report-details/:reportId', {templateUrl: 'partials/report-details.html', controller: 'ReportDetailsCtrl', activetab: "none"}).
-            otherwise({redirectTo: '/reports-browser/'});
+            when("/reports-browser", {templateUrl: "partials/reports-browser.html", controller: "ReportsBrowserCtrl", activetab: "reports-browser"}).
+            when("/reports-browser/user/:installationId", {templateUrl: "partials/reports-browser.html", controller: "ReportsBrowserCtrl", activetab: "reports-browser"}).
+            when("/bugs-browser", {templateUrl: "partials/bugs-browser.html", controller: "BugsBrowserCtrl", activetab: "bugs-browser"}).
+            when("/report-details/:reportId", {templateUrl: "partials/report-details.html", controller: "ReportDetailsCtrl", activetab: "none"}).
+            otherwise({redirectTo: "/reports-browser/"});
     }]);
 
-    acralyzer.directive('prettyprint',function(){
-            return {
-                restrict: 'A',
-                link:function($scope,$element,$attr){
-                    // Persistent container for json output
-                    var $json = $('<div>');
-                    $element.prepend($json);
-
-                    $attr.$observe('prettyprint',function(value){
-
-                        var dopp = function (inspect){
-                            // Replace contents of persistent json container with new json table
-                            $json.empty();
-                            $json.append(prettyPrint(inspect, {
-                                // Config
-                                //                            maxArray: 20, // Set max for array display (default: infinity)
-                                expanded: false, // Expanded view (boolean) (default: true),
-                                maxDepth: 5, // Max member depth (when displaying objects) (default: 3)
-                                sortKeys: true,
-                                stringsWithDoubleQuotes: false,
-                                classes: {
-                                    'default': {
-                                        table: "none",
-                                        th: "none"
-                                    }
-                                }
-                            }));
-                        };
-
-                        if (value !== '') {
-                            // Register watcher on evaluated expression
-                            $scope.$watch(function watcher(){
-                                return $scope.$eval(value);
-                            },dopp,true);
-                        } else {
-                            // Watch entire scope
-                            $scope.$watch(dopp);
-                        }
-
-                    });
-                }
-            };
-        });
-
-    acralyzer.directive('reportDetails', function() {
+    acralyzer.directive("prettyprint", function() {
         return {
-            restrict: 'E',
-            scope: {
-                report: '=',
-                acralyzer: '='
-            },
-            templateUrl: 'partials/report-details.html'
+            restrict: "A",
+            link: function($scope, $element, $attr) {
+                // Persistent container for json output
+                var $json = $("<div>");
+                $element.prepend($json);
+                $attr.$observe("prettyprint", function(value) {
+                    var dopp = function(inspect) {
+                        // Replace contents of persistent json container with new json table
+                        $json.empty();
+                        $json.append(prettyPrint(inspect, {
+                            // Config
+                            // maxArray: 20, // Set max for array display (default: infinity)
+                            expanded: false, // Expanded view (boolean) (default: true),
+                            maxDepth: 5, // Max member depth (when displaying objects) (default: 3)
+                            sortKeys: true,
+                            stringsWithDoubleQuotes: false,
+                            classes: {
+                                "default": {
+                                    table: "none",
+                                    th: "none"
+                                }
+                            }
+                        }));
+                    };
+                    if (value !== "") {
+                        // Register watcher on evaluated expression
+                        $scope.$watch(function watcher() {
+                            return $scope.$eval(value);
+                        }, dopp, true);
+                    } else {
+                        // Watch entire scope
+                        $scope.$watch(dopp);
+                    }
+                });
+            }
         };
     });
 
-})(window.acralyzerConfig, window.angular, window.jQuery, window.acralyzerEvents, window.prettyPrint);
+    acralyzer.directive("reportDetails", function() {
+        return {
+            restrict: "E",
+            scope: {
+                report: "=",
+                acralyzer: "="
+            },
+            templateUrl: "partials/report-details.html"
+        };
+    });
+
+})(window.angular, window.prettyPrint);

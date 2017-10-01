@@ -24,4 +24,4 @@
     acralyzerEvents.LOGGED_IN = "logged_in";
     acralyzerEvents.LOGGED_OUT = "logged_out";
 
-}( window.acralyzerEvents = window.acralyzerEvents || {}));
+}(window.acralyzerEvents = window.acralyzerEvents || {}));

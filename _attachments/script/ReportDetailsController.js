@@ -16,21 +16,21 @@
  You should have received a copy of the GNU General Public License
  along with Acralyzer.  If not, see <http://www.gnu.org/licenses/>.
  */
-(function(acralyzerConfig,angular,acralyzer) {
+(function(acralyzer) {
     "use strict";
 
     function ReportDetailsCtrl($scope, $routeParams, ReportsStore) {
         $scope.reportId = $routeParams.reportId;
         $scope.loadReport = function(reportId) {
             $scope.report = ReportsStore.reportDetails(reportId, function(data) {
-                data.readableUptime = moment.duration(data.uptime, 'seconds').humanize();
-                data.formatedCrashDate = moment(data.USER_CRASH_DATE).format('LLL');
-                data.formatedTimestamp = moment(data.timestamp).format('LLL');
+                data.readableUptime = moment.duration(data.uptime, "seconds").humanize();
+                data.formatedCrashDate = moment(data.USER_CRASH_DATE).format("LLL");
+                data.formatedTimestamp = moment(data.timestamp).format("LLL");
             });
         };
         $scope.loadReport($scope.reportId);
-
     }
 
-    acralyzer.controller('ReportDetailsCtrl',["$scope", "$routeParams", "ReportsStore",ReportDetailsCtrl]);
-})(window.acralyzerConfig,window.angular,window.acralyzer);
+    acralyzer.controller("ReportDetailsCtrl", ["$scope", "$routeParams", "ReportsStore", ReportDetailsCtrl]);
+
+})(window.acralyzer);

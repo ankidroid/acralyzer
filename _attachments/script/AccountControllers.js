@@ -16,7 +16,7 @@
  You should have received a copy of the GNU General Public License
  along with Acralyzer.  If not, see <http://www.gnu.org/licenses/>.
  */
-(function(acralyzerConfig,angular,acralyzer,acralyzerEvents) {
+(function(acralyzer, acralyzerEvents) {
     "use strict";
 
     function AccountCtrl($scope, $user, $dialog) {
@@ -26,10 +26,10 @@
 
         $scope.showLogin = function() {
             var d = $dialog.dialog({
-                templateUrl: 'partials/login-dialog.html',
-                controller:  'LoginDialogCtrl'
+                templateUrl: "partials/login-dialog.html",
+                controller: "LoginDialogCtrl"
             });
-            d.open().then(function(result){
+            d.open().then(function(result) {
             });
         };
 
@@ -62,7 +62,7 @@
         };
     }
 
-    acralyzer.controller('AccountCtrl', ['$scope','$user','$dialog', AccountCtrl]);
-    acralyzer.controller('LoginDialogCtrl', ['$scope','$user','dialog', LoginDialogCtrl]);
+    acralyzer.controller("AccountCtrl", ["$scope", "$user", "$dialog", AccountCtrl]);
+    acralyzer.controller("LoginDialogCtrl", ["$scope", "$user", "dialog", LoginDialogCtrl]);
 
-})(window.acralyzerConfig,window.angular,window.acralyzer, window.acralyzerEvents);
+})(window.acralyzer, window.acralyzerEvents);

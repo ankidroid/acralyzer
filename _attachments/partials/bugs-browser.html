@@ -3,7 +3,7 @@
     <div id="content">
         <div class="row-fluid tab-content">
             <span ng-bind-template="Bugs {{startNumber}} to {{startNumber + bugs.length - 1}}:">Loading...</span>
-            <div class="loader" ng-show="loading"><img src="img/loader.gif"/></div>
+            <div class="loader" ng-show="loading"><img src="img/loader.gif"></div>
             <ng-include src="'partials/bugs-table.html'"></ng-include>
             <ng-include src="'partials/paginator.html'"></ng-include>
         </div>

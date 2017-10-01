@@ -1,119 +1,116 @@
 <!DOCTYPE html>
 <html ng-app="Acralyzer" ng-controller="AcralyzerCtrl">
-  <head>
-    <!--
-    Copyright 2013 Kevin Gaudin (kevin.gaudin@gmail.com)
+    <head>
+        <!--
+        Copyright 2013 Kevin Gaudin (kevin.gaudin@gmail.com)
 
-    This file is part of Acralyzer.
+        This file is part of Acralyzer.
 
-    Acralyzer is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+        Acralyzer is free software: you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation, either version 3 of the License, or
+        (at your option) any later version.
 
-    Acralyzer is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+        Acralyzer is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with Acralyzer.  If not, see <http://www.gnu.org/licenses/>.
-    -->
-    <title>Acralyzer / {{acralyzer.app}}</title>
-    <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="img/logo.png" />
-    <link rel="alternate" type="application/rss+xml"  href="{{rsslink}}" title="Latest Crash Reports">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        You should have received a copy of the GNU General Public License
+        along with Acralyzer.  If not, see <http://www.gnu.org/licenses/>.
+        -->
+        <title>Acralyzer / {{acralyzer.app}}</title>
+        <meta charset="utf-8">
+        <link rel="icon" type="image/png" href="img/logo.png">
+        <link rel="alternate" type="application/rss+xml"  href="{{rsslink}}" title="Latest Crash Reports">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap-responsive.min.css" type="text/css">
+        <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap-responsive.min.css" type="text/css">
 
-    <link rel="stylesheet" href="style/main.css" type="text/css">
-  </head>
-  <body>
-    <div class="navbar navbar-fixed-top" ng-controller="NavigationCtrl">
-        <div class="navbar-inner">
-            <a class="brand" href="#">Acralyzer</a>
-            <ul class="nav">
-                <li ng-class="{active: $route.current.activetab == 'bugs-browser'}"><a href="#/bugs-browser">Bugs</a></li>
-                <li ng-class="{active: $route.current.activetab == 'reports-browser'}"><a href="#/reports-browser">Reports</a></li>
-            </ul>
-
-            <div id="usermenu" class="btn-group pull-right" data-ng-controller="AccountCtrl">
-              <button style="min-width: 150px" class="btn dropdown-toggle" data-toggle="dropdown" ng-cloak>
-                  <i class="icon-user"></i> {{username || "Anonymous"}}
-                  <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                <li ng-class="{ hide: username }"><a ng-click="showLogin()" title="Login"><strong>Login</strong></a></li>
-                <li ng-class="{ hide: !username }"><a ng-click="logout()" title="Logout"><i class="icon-off" alt="logout"></i> Logout</a></li>
-              </ul>
+        <link rel="stylesheet" href="style/main.css" type="text/css">
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top" ng-controller="NavigationCtrl">
+            <div class="navbar-inner">
+                <a class="brand" href="#">Acralyzer</a>
+                <ul class="nav">
+                    <li ng-class="{active: $route.current.activetab == 'bugs-browser'}"><a href="#/bugs-browser">Bugs</a></li>
+                    <li ng-class="{active: $route.current.activetab == 'reports-browser'}"><a href="#/reports-browser">Reports</a></li>
+                </ul>
+                <div id="usermenu" class="btn-group pull-right" data-ng-controller="AccountCtrl">
+                    <button style="min-width: 150px" class="btn dropdown-toggle" data-toggle="dropdown" ng-cloak>
+                        <i class="icon-user"></i> {{username || "Anonymous"}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li ng-class="{ hide: username }"><a ng-click="showLogin()" title="Login"><strong>Login</strong></a></li>
+                        <li ng-class="{ hide: !username }"><a ng-click="logout()" title="Logout"><i class="icon-off" alt="logout"></i> Logout</a></li>
+                    </ul>
+                </div>
 
             </div>
-
         </div>
-    </div>
 
-    <div ng-view></div>
+        <div ng-view></div>
 
+        <footer class="footer">
+            <div class="container">
+                <p><a href="http://acra.ch/acralyzer" target="_blank">Acralyzer</a> is crafted by <a href="https://plus.google.com/105599514712357912650" target="_blank">Kevin Gaudin</a>.</p>
+                <p><a href="http://github.com/ACRA/acralyzer" target="_blank">Code</a> licensed under <a href="http://www.gnu.org/licenses/gpl.html" target="_blank">GNU General Public License v3</a>.</p>
+                <ul class="footer-links">
+                    <li><a href="https://plus.google.com/118444843928759726538" target="_blank">Follow +ACRA on Google+</a></li>
+                    <li class="muted">·</li>
+                    <li><a href="https://github.com/ACRA/acralyzer/issues?state=open" target="_blank">Issues</a></li>
+                    <li class="muted">·</li>
+                    <li><a href="https://github.com/ACRA/acralyzer/wiki" target="_blank">Documentation</a></li>
+                </ul>
+            </div>
+            <p>Acralyzer uses other open source software:</p>
+            <p>
+                <a href="http://couchdb.apache.org" target="_blank">CouchDB</a>
+                · <a href="http://angularjs.org" target="_blank">AngularJS</a>
+                · <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+                · <a href="http://angular-ui.github.com/bootstrap/" target="_blank">Angular-UI Bootstrap</a>
+                <br>
+                <a href="http://jquery.com/" target="_blank">JQuery</a>
+                · <a href="http://james.padolsey.com/javascript/prettyprint-for-javascript/" target="_blank">prettyprint.js</a>
+                · <a href="http://momentjs.com/" target="_blank">moment.js</a>
+                · <a href="https://github.com/coreyti/showdown" target="_blank">Showdown</a>
+                <br>
+                <a href="http://kevingaudin.github.io/monsterid.js" target="_blank">MonsterID.js</a>
+            </p>
+            <p>Most icons by <a href="http://glyphicons.com/">Glyphicons</a>.</p>
+        </footer>
 
-    <footer class="footer">
-        <div class="container">
-            <p><a href="http://acra.ch/acralyzer" target="_blank">Acralyzer</a> is crafted by <a href="https://plus.google.com/105599514712357912650" target="_blank">Kevin Gaudin</a>.</p>
-            <p><a href="http://github.com/ACRA/acralyzer" target="_blank">Code</a> licensed under <a href="http://www.gnu.org/licenses/gpl.html" target="_blank">GNU General Public License v3</a>.</p>
-            <ul class="footer-links">
-                <li><a href="https://plus.google.com/118444843928759726538" target="_blank">Follow +ACRA on Google+</a></li>
-                <li class="muted">·</li>
-                <li><a href="https://github.com/ACRA/acralyzer/issues?state=open" target="_blank">Issues</a></li>
-                <li class="muted">·</li>
-                <li><a href="https://github.com/ACRA/acralyzer/wiki" target="_blank">Documentation</a></li>
-            </ul>
-        </div>
-        <p>Acralyzer uses other open source software:</p>
-        <p>
-            <a href="http://couchdb.apache.org" target="_blank">CouchDB</a>
-            · <a href="http://angularjs.org" target="_blank">AngularJS</a>
-            · <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
-            · <a href="http://angular-ui.github.com/bootstrap/" target="_blank">Angular-UI Bootstrap</a>
-            <br/>
-            <a href="http://jquery.com/" target="_blank">JQuery</a>
-            · <a href="http://james.padolsey.com/javascript/prettyprint-for-javascript/" target="_blank">prettyprint.js</a>
-            · <a href="http://momentjs.com/" target="_blank">moment.js</a>
-            · <a href="https://github.com/coreyti/showdown" target="_blank">Showdown</a>
-            <br/>
-            <a href="http://kevingaudin.github.io/monsterid.js" target="_blank">MonsterID.js</a>
-        </p>
-        <p>Most icons by <a href="http://glyphicons.com/">Glyphicons</a>.</p>
-    </footer>
+        <script src="vendor/jquery/jquery-1.8.3.min.js"></script>
+        <script src="vendor/angular/angular.min.js"></script>
+        <script src="vendor/angular/angular-resource.min.js"></script>
+        <script src="vendor/angular-ui-bootstrap/ui-bootstrap-tpls-0.3.0.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script src="vendor/padolsey/prettyprint.js"></script>
+        <script src="vendor/timrwood/moment.min.js"></script>
+        <script src="vendor/jshash/md5-min.js"></script>
+        <script src="vendor/showdown/showdown.js"></script>
+        <script src="vendor/showdown/extensions/table.js"></script>
+        <script src="vendor/showdown/extensions/github.js"></script>
+        <script src="vendor/monsterid/monsterid.min.js"></script>
 
-    <script src="vendor/jquery/jquery-1.8.3.min.js"></script>
-    <script src="vendor/angular/angular.min.js"></script>
-    <script src="vendor/angular/angular-resource.min.js"></script>
-    <script src="vendor/angular-ui-bootstrap/ui-bootstrap-tpls-0.3.0.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="vendor/padolsey/prettyprint.js"></script>
-    <script src="vendor/timrwood/moment.min.js"></script>
-    <script src="vendor/jshash/md5-min.js"></script>
-    <script src="vendor/showdown/showdown.js"></script>
-    <script src="vendor/showdown/extensions/table.js"></script>
-    <script src="vendor/showdown/extensions/github.js"></script>
-    <script src="vendor/monsterid/monsterid.min.js"></script>
+        <script src="script/config.js"></script>
 
-    <script src="script/config.js"></script>
+        <script src="script/AcralyzerEvents.js"></script>
+        <script src="script/app.js"></script>
+        <script src="script/service.user.js"></script>
 
-    <script src="script/AcralyzerEvents.js"></script>
-    <script src="script/app.js"></script>
-    <script src="script/service.user.js"></script>
+        <script src="script/AccountControllers.js"></script>
+        <script src="script/AcralyzerControllers.js"></script>
+        <script src="script/NavigationController.js"></script>
+        <script src="script/ReportDetailsController.js"></script>
+        <script src="script/ReportsBrowserControllers.js"></script>
+        <script src="script/BugsBrowserControllers.js"></script>
 
-    <script src="script/AccountControllers.js"></script>
-    <script src="script/AcralyzerControllers.js"></script>
-    <script src="script/NavigationController.js"></script>
-    <script src="script/ReportDetailsController.js"></script>
-    <script src="script/ReportsBrowserControllers.js"></script>
-    <script src="script/BugsBrowserControllers.js"></script>
+        <script src="script/service.reportsstore.js"></script>
+        <script src="script/service.monsterid.js"></script>
 
-    <script src="script/service.reportsstore.js"></script>
-    <script src="script/service.monsterid.js"></script>
-
-  </body>
+    </body>
 </html>

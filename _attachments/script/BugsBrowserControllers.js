@@ -16,7 +16,7 @@
  You should have received a copy of the GNU General Public License
  along with Acralyzer.  If not, see <http://www.gnu.org/licenses/>.
  */
-(function(acralyzerConfig,angular,acralyzer,acralyzerEvents) {
+(function(acralyzer, acralyzerEvents) {
     "use strict";
 
     function BugsBrowserCtrl($scope, ReportsStore, $routeParams) {
@@ -60,7 +60,7 @@
             $scope.getData();
         };
 
-        $scope.$watch('paginator.pageSize', function(newValue, oldValue){
+        $scope.$watch("paginator.pageSize", function(newValue, oldValue) {
             if (newValue !== oldValue) {
                 $scope.firstPage();
             }
@@ -83,7 +83,7 @@
                 $scope.loading = false;
             };
 
-            var errorHandler = function(response, getResponseHeaders){
+            var errorHandler = function(response, getResponseHeaders) {
                 $scope.bugs = [];
                 $scope.loading = false;
             };
@@ -94,8 +94,9 @@
         $scope.$on(acralyzerEvents.LOGGED_IN, $scope.getData);
         $scope.$on(acralyzerEvents.LOGGED_OUT, $scope.getData);
         $scope.getData();
+
     }
 
-    acralyzer.controller('BugsBrowserCtrl', ["$scope", "ReportsStore", "$routeParams", BugsBrowserCtrl]);
+    acralyzer.controller("BugsBrowserCtrl", ["$scope", "ReportsStore", "$routeParams", BugsBrowserCtrl]);
 
-})(window.acralyzerConfig,window.angular,window.acralyzer,window.acralyzerEvents);
+})(window.acralyzer, window.acralyzerEvents);

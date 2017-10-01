@@ -16,8 +16,9 @@
  You should have received a copy of the GNU General Public License
  along with Acralyzer.  If not, see <http://www.gnu.org/licenses/>.
  */
-(function(acralyzerConfig,angular,acralyzer,acralyzerEvents,$) {
+(function(acralyzerConfig, acralyzer) {
     "use strict";
+
     /**
      * @class AcralyzerCtrl
      *
@@ -40,5 +41,7 @@
         $user.init();
 
     }
-    acralyzer.controller('AcralyzerCtrl', ["$user", "$scope", "ReportsStore", "$rootScope", "$routeParams", "$http", AcralyzerCtrl]);
-})(window.acralyzerConfig,window.angular,window.acralyzer,window.acralyzerEvents,window.jQuery);
+
+    acralyzer.controller("AcralyzerCtrl", ["$user", "$scope", "ReportsStore", "$rootScope", "$routeParams", "$http", AcralyzerCtrl]);
+
+})(window.acralyzerConfig, window.acralyzer);

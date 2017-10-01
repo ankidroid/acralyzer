@@ -16,13 +16,13 @@
  You should have received a copy of the GNU General Public License
  along with Acralyzer.  If not, see <http://www.gnu.org/licenses/>.
  */
-(function(acralyzerConfig,angular,acralyzer) {
+(function(acralyzer) {
     "use strict";
 
     function NavigationCtrl($scope, $route, $dialog) {
         $scope.$route = $route;
     }
 
-    acralyzer.controller('NavigationCtrl', ["$scope", "$route", "$dialog", NavigationCtrl]);
+    acralyzer.controller("NavigationCtrl", ["$scope", "$route", "$dialog", NavigationCtrl]);
 
-})(window.acralyzerConfig,window.angular,window.acralyzer);
+})(window.acralyzer);
