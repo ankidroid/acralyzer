@@ -101,6 +101,7 @@
             var errorHandler = function(response, getResponseHeaders){
                 $scope.reports = [];
                 $scope.totalReports = "";
+                $scope.loading = false;
             };
 
             if(($scope.filterName === $scope.noFilter || $scope.filterValue === $scope.noFilterValue) && !$scope.selectedUser) {

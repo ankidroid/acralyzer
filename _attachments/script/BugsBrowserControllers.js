@@ -67,7 +67,7 @@
         });
 
         $scope.getData = function() {
-//            $scope.loading = true;
+            $scope.loading = true;
 
             var successHandler = function(data) {
                 $scope.bugs = data.rows;
